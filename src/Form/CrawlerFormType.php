@@ -12,7 +12,7 @@ class CrawlerFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enter_your_url')
+            ->add('url')
             ->add('Go', SubmitType::class)
         ;
     }
