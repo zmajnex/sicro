@@ -44,21 +44,5 @@ class MainController extends AbstractController
             'name' => $name,
         ]);
     }
-    /**
-     * @Route("/crawl", name="form page")
-     */
-    public function new(Request $request)
-    {
-        $form = $this->createForm(CrawlerFormType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $url = $form->getData();
-            dump($url);
-            die();
-            return $this->redirectToRoute('form page');
-        }
-        return $this->render('home/form.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+   
 }
