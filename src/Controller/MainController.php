@@ -11,7 +11,8 @@ use Psr\Log\LoggerInterface;
 class MainController extends AbstractController
 {
     private $logger;
-    public function __construct(LoggerInterface $logger){
+    public function __construct(LoggerInterface $logger)
+    {
         $this->logger = $logger;
     }
     /**
@@ -27,14 +28,19 @@ class MainController extends AbstractController
     /**
      * @Route("/custom/{name?}", name="Custom page")
      */
-    public function custom(Request $request){
+    public function custom(Request $request)
+    {
+        /**
+         * Symfony dumper
+         */
         // dump($request);
         $name = $request->get('name');
-       // $this->logger->info($name);
+        //$this->logger->info($name);
+        //$this->logger->info(dump($name));
         isset($name) ? $name = $name : $name = 'Mr X';
        //return new Response('Welcome '.$name);
-       return $this->render('home/custom.html.twig',[
-           'name' => $name
-       ]);
+        return $this->render('home/custom.html.twig', [
+            'name' => $name,
+        ]);
     }
 }

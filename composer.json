@@ -20,7 +20,9 @@
         "symfony/twig-pack": "^1.0",
         "symfony/yaml": "4.4.*"
     },
-    "require-dev": {},
+    "require-dev": {
+        "escapestudios/symfony2-coding-standard": "3.x-dev"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
