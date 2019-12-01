@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
+use App\Form\CrawlerFormType;
 
 class MainController extends AbstractController
 {
@@ -20,8 +21,8 @@ class MainController extends AbstractController
      */
     public function index()
     {
-         //$html = "<h1>Home page</h1>";
-         //return new Response($html);
+        //$html = "<h1>Home page</h1>";
+        //return new Response($html);
         //$logger->info('I just got the logger');
         return $this->render('home/index.html.twig');
     }
@@ -38,9 +39,26 @@ class MainController extends AbstractController
         //$this->logger->info($name);
         //$this->logger->info(dump($name));
         isset($name) ? $name = $name : $name = 'Mr X';
-       //return new Response('Welcome '.$name);
+        //return new Response('Welcome '.$name);
         return $this->render('home/custom.html.twig', [
             'name' => $name,
+        ]);
+    }
+    /**
+     * @Route("/crawl", name="form page")
+     */
+    public function new(Request $request)
+    {
+        $form = $this->createForm(CrawlerFormType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $url = $form->getData();
+            dump($url);
+            die();
+            return $this->redirectToRoute('form page');
+        }
+        return $this->render('home/form.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }
