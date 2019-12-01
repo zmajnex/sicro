@@ -14,6 +14,7 @@
         "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
         "symfony/maker-bundle": "^1.14",
+        "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "^1.0",
         "symfony/test-pack": "^1.0",
         "symfony/twig-pack": "^1.0",
