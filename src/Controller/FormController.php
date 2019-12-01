@@ -8,24 +8,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 use App\Form\CrawlerFormType;
+use App\Controller\ProtonCrawlerController;
 
 class FormController extends AbstractController
 {
-     /**
+    /**
      * @Route("/crawl", name="form page")
      */
     public function new(Request $request)
     {
-        $form = $this->createForm(CrawlerFormType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $url = $form->getData();
-            dump($url);
-            die();
-            return $this->redirectToRoute('form page');
-        }
+        $form = $this->createForm(CrawlerFormType::class, null, [
+            'action' => $this->generateUrl('proton_crawler'),
+            'method' => 'POST',
+        ]);
+
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+   
 }
