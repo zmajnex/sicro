@@ -60,8 +60,7 @@ class ProtonCrawlerController extends AbstractController
          * @return  array $links
          */
         //$links = new \stdClass();
-         
-     
+      
         // Get href from a tag
         $results = $crawler->filter('a')->each(function ($node, $i) use ($fp, $links) {
              $href = $node->link()->getUri();
@@ -73,13 +72,17 @@ class ProtonCrawlerController extends AbstractController
            fwrite($fp, json_encode($links));
             //return $links; 
         });
+      //  return $links;
+        
            // Get title from a tag    
            $title = $crawler->filter('a[title]')->each(function ($node, $i) use ($fp, $links) {
            $title =  $node->text();
             $links['title'] = $title;           
             fwrite($fp, json_encode($links));
-            //return;
+            
         });
+       // return $links;
+        var_dump($links);
         fclose($fp);
         return $url;
     }
