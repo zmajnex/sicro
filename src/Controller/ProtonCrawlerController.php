@@ -44,40 +44,49 @@ class ProtonCrawlerController extends AbstractController
          * iterate trough $nodes, and write links in json 
          * @return  array $links
          */
-       $links = new \stdClass();
+       //$links = new \stdClass();
+       
+       $links = array(
+           'url'=>null,
+           'author'=>null,
+           'visited'=>null,
+           'text'=>null,
+           'title'=>null,
+       );
        // Get href from a tag
        $results = $crawler->filter('a')->each(function ($node,$i) use ($fp,$links) {
              
-            $links->href= $node->link()->getUri();
-            $links->author = 'Proton';
+              
+             $links['url']= $node->link()->getUri();
+            //$links['url']['author'] = 'Proton';
                  
         fwrite($fp, json_encode($links));
-           return $links; 
+           //return $links['url']; 
         });
         // Get text from a tag
         $text = $crawler->filter('a')->each(function ($node,$i) use ($fp,$links) {
              
-            $links->text= $node->text();
-            fwrite($fp, json_encode($links)); 
+            $links['text']= $node->text();
+           fwrite($fp, json_encode($links)); 
         });
         // Get title from a tag    
         $title = $crawler->filter('a[title]')->each(function ($node,$i) use ($fp,$links) {
              
-            $links->title= $node->text();
+            $links['title']= $node->text();
             fwrite($fp, json_encode($links)); 
         });
         fclose($fp);
        
         // Get meta tags
-        $metaTags = new \stdClass(); 
-        $fp = fopen('meta.json', 'w');
-        // Get meta title
-            $metaTitle = $crawler->filter('title')->each(function ($node,$i) use ($fp,$metaTags) {     
-            $metaTags->metaTitle= $node->text();
-            fwrite($fp, json_encode($metaTags)); 
-        });
+        // $metaTags = new \stdClass(); 
+        // $fp = fopen('meta.json', 'w');
+        // // Get meta title
+        //     $metaTitle = $crawler->filter('title')->each(function ($node,$i) use ($fp,$metaTags) {     
+        //     $metaTags->metaTitle= $node->text();
+        //     fwrite($fp, json_encode($metaTags)); 
+        // });
 
-        fclose($fp); 
+        // fclose($fp); 
         
         return $url;
     }
