@@ -11,9 +11,13 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
-
+use Symfony\Component\DomCrawler\Crawler as DomCrawler;
+//use GuzzleHttp\Client; 
 class ProtonCrawlerController extends AbstractController
 {
+    
+ 
+       
     /**
      * @Route("/proton/crawler", name="proton_crawler")
      */
@@ -27,6 +31,11 @@ class ProtonCrawlerController extends AbstractController
         return $this->render('form/results.html.twig', array(
             'url' => $testData));
     }
+    
+
+
+
+
     public function crawlUrl($url){
         /**
  * crawl web page and extract all <a> tag hrefs
@@ -47,7 +56,7 @@ class ProtonCrawlerController extends AbstractController
        //$links = new \stdClass();
        
        $links = array(
-           'url'=>null,
+           'url'=>$url,
            'author'=>null,
            'visited'=>null,
            'text'=>null,
@@ -58,9 +67,9 @@ class ProtonCrawlerController extends AbstractController
              
               
              $links['url']= $node->link()->getUri();
-            //$links['url']['author'] = 'Proton';
+             $links['author'] = 'Proton';
                  
-        fwrite($fp, json_encode($links));
+         fwrite($fp, json_encode($links));
            //return $links['url']; 
         });
         // Get text from a tag
@@ -73,21 +82,9 @@ class ProtonCrawlerController extends AbstractController
         $title = $crawler->filter('a[title]')->each(function ($node,$i) use ($fp,$links) {
              
             $links['title']= $node->text();
-            fwrite($fp, json_encode($links)); 
+             fwrite($fp, json_encode($links)); 
         });
-        fclose($fp);
-       
-        // Get meta tags
-        // $metaTags = new \stdClass(); 
-        // $fp = fopen('meta.json', 'w');
-        // // Get meta title
-        //     $metaTitle = $crawler->filter('title')->each(function ($node,$i) use ($fp,$metaTags) {     
-        //     $metaTags->metaTitle= $node->text();
-        //     fwrite($fp, json_encode($metaTags)); 
-        // });
-
-        // fclose($fp); 
-        
+         fclose($fp);       
         return $url;
     }
 }
