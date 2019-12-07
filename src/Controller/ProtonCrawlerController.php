@@ -16,7 +16,13 @@ class ProtonCrawlerController extends AbstractController
     {
 
         $url = $request->request->get('crawler_form')['url'];       
-       // dump($url);
-        return new Response('Crawling: '. $url . '...');
+        $testData = $this->crawlUrl($url);
+        // dump($url);
+       // return new Response('Crawling: '. $url . '...');
+        return $this->render('form/results.html.twig', array(
+            'url' => $testData));
+    }
+    public function crawlUrl($url){
+        return $url;
     }
 }
