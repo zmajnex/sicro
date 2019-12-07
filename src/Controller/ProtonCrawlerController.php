@@ -15,7 +15,7 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 //use GuzzleHttp\Client; 
 class ProtonCrawlerController extends AbstractController
 {
-
+   
 
 
     /**
@@ -41,6 +41,7 @@ class ProtonCrawlerController extends AbstractController
 
     public function crawlUrl($url)
     {
+       
         /**
          * crawl web page and extract all <a> tag hrefs
          *
@@ -48,8 +49,9 @@ class ProtonCrawlerController extends AbstractController
          *
          * @return array $results
          */
-
+        
         $client = new Client();
+        $links = array();
         $crawler = $client->request('GET', $url);
         $fp = fopen('results' . time() . '.json', 'w');
         /**
@@ -58,39 +60,27 @@ class ProtonCrawlerController extends AbstractController
          * @return  array $links
          */
         //$links = new \stdClass();
-
-        $links = array(
-            'url' => $url,
-            'author' => null,
-            'visited' => null,
-            'text' => null,
-            'title' => null,
-        );
+         
+     
         // Get href from a tag
         $results = $crawler->filter('a')->each(function ($node, $i) use ($fp, $links) {
-
-
-            $links['url'] = $node->link()->getUri();
+             $href = $node->link()->getUri();
+             $text = $node->text();
+            
+            $links['url'] = $href;
             $links['author'] = 'Proton';
-
-            fwrite($fp, json_encode($links));
-            //return $links['url']; 
+            $links['text'] = $text;
+           fwrite($fp, json_encode($links));
+            //return $links; 
         });
-        // Get text from a tag
-        $text = $crawler->filter('a')->each(function ($node, $i) use ($fp, $links) {
-
-            $links['text'] = $node->text();
+           // Get title from a tag    
+           $title = $crawler->filter('a[title]')->each(function ($node, $i) use ($fp, $links) {
+           $title =  $node->text();
+            $links['title'] = $title;           
             fwrite($fp, json_encode($links));
-        });
-        // Get title from a tag    
-        $title = $crawler->filter('a[title]')->each(function ($node, $i) use ($fp, $links) {
-
-            $links['title'] = $node->text();
-            fwrite($fp, json_encode($links));
-            return;
+            //return;
         });
         fclose($fp);
-
         return $url;
     }
 }
