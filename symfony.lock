@@ -78,6 +78,9 @@
     "escapestudios/symfony2-coding-standard": {
         "version": "3.x-dev"
     },
+    "fabpot/goutte": {
+        "version": "v4.0.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -222,6 +225,12 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client": {
+        "version": "v4.4.1"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/http-foundation": {
         "version": "v4.4.0"

@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 use App\Form\CrawlerFormType;
 use App\Controller\ProtonCrawlerController;
-
+/**
+ * This class render the form and setting up action method 
+ */
 class FormController extends AbstractController
 {
     /**
