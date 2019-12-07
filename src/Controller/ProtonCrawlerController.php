@@ -82,7 +82,7 @@ class ProtonCrawlerController extends AbstractController
             
         });
        // return $links;
-        var_dump($links);
+       // var_dump($links);
         fclose($fp);
         return $url;
     }
