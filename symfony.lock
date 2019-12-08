@@ -82,11 +82,7 @@
         "version": "v4.0.0"
     },
     "guzzlehttp/guzzle": {
-<<<<<<< HEAD
         "version": "6.4.1"
-=======
-        "version": "6.5.0"
->>>>>>> origin/master
     },
     "guzzlehttp/promises": {
         "version": "v1.3.1"

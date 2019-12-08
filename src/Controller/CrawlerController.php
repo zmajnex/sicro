@@ -52,47 +52,10 @@ class CrawlerController extends AbstractController
            $nodeTitle = $node->attr('title');
            $currentLinks[$nodeUrl]['url'] = $nodeUrl;
            $currentLinks[$nodeUrl]['name'] = $nodeName;
-           $currentLinks[$nodeUrl]['title'] = $nodeTitle;  
- 
-            
-           
+           $currentLinks[$nodeUrl]['title'] = $nodeTitle;                   
        });
       dump($currentLinks);
      die;
-        //  $crawler = $client->request('GET', $url);
-
-      //   $results = $crawler->filter('a');
-      //   $fp = fopen('results' . time() . '.json', 'w');
-      //   /**
-      //    * Anonymous Simfony function
-      //    * iterate trough $nodes, and write links in json 
-      //    * @return  array $links
-      //    */
-      //   //$links = new \stdClass();
-      
-      //   // Get href from a tag
-       
-      //   $results = $crawler->filter('a')->each(function ($node, $i) use ($fp, $links) {
-      //        $href = $node->link()->getUri();
-      //        $text = $node->text();       
-      //       $links['url'] = $href;
-      //       $links['author'] = 'Proton';
-      //       $links['text'] = $text;
-           
-      //      fwrite($fp, json_encode($links));                      
-      //   });
-      //      // Get title from a tag    
-      //      $title = $crawler->filter('a[title]')->each(function ($node, $i) use ($fp, $links) {
-      //      $title =  $node->text();
-      //       $links['title'] = $title; 
-                     
-      //      fwrite($fp, json_encode($links));
         
-      //   });
-       
-      //  // return $links;
-      
-      //   fclose($fp);
-       // return $url;
     }
 }
