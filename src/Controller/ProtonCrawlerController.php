@@ -15,9 +15,7 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 //use GuzzleHttp\Client; 
 class ProtonCrawlerController extends AbstractController
 {
-   
-
-
+ 
     /**
      * @Route("/proton/crawler", name="proton_crawler")
      */
@@ -29,7 +27,7 @@ class ProtonCrawlerController extends AbstractController
         // dump($url);
         // return new Response('Crawling: '. $url . '...');
         return $this->render('form/results.html.twig', array(
-            'url' => $testData
+            'url' => $url
         ));
     }
 
@@ -53,6 +51,7 @@ class ProtonCrawlerController extends AbstractController
         $client = new Client();
         $links = array();
         $crawler = $client->request('GET', $url);
+        $results = $crawler->filter('a');
         $fp = fopen('results' . time() . '.json', 'w');
         /**
          * Anonymous Simfony function
@@ -62,28 +61,28 @@ class ProtonCrawlerController extends AbstractController
         //$links = new \stdClass();
       
         // Get href from a tag
+       
         $results = $crawler->filter('a')->each(function ($node, $i) use ($fp, $links) {
              $href = $node->link()->getUri();
-             $text = $node->text();
-            
+             $text = $node->text();       
             $links['url'] = $href;
             $links['author'] = 'Proton';
             $links['text'] = $text;
-           fwrite($fp, json_encode($links));
-            //return $links; 
+           
+           fwrite($fp, json_encode($links));                      
         });
-      //  return $links;
-        
            // Get title from a tag    
            $title = $crawler->filter('a[title]')->each(function ($node, $i) use ($fp, $links) {
            $title =  $node->text();
-            $links['title'] = $title;           
-            fwrite($fp, json_encode($links));
-            
+            $links['title'] = $title; 
+                     
+           fwrite($fp, json_encode($links));
+        
         });
+       
        // return $links;
-       // var_dump($links);
+      
         fclose($fp);
-        return $url;
+       // return $url;
     }
 }
