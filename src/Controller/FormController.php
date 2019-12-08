@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
 use App\Form\CrawlerFormType;
-use App\Controller\ProtonCrawlerController;
+
 /**
  * This class render the form and setting up action method 
  */
@@ -20,7 +20,7 @@ class FormController extends AbstractController
     public function new(Request $request)
     {
         $form = $this->createForm(CrawlerFormType::class, null, [
-            'action' => $this->generateUrl('proton_crawler'),
+            'action' => $this->generateUrl('results'),
             'method' => 'POST',
         ]);
 
