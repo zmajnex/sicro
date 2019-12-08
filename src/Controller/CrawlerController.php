@@ -34,16 +34,31 @@ class CrawlerController extends AbstractController
         $response = $client->request('GET', $url);
         $statusCode = $response->getStatusCode();
         $html = $response->getBody()->getContents();
+        
         // Need to pass $url to constructor
         $crawler = new Crawler($html,$url);
-        $text = $crawler->filter('a')->eq(5)->text();
-        $href = $crawler->filter('a')->eq(5)->link()->getUri();
-        $title = $crawler->filter('a[title]')->eq(5)->text();
-        var_dump($href,$text,$title);die;
-    //     foreach ($crawler->filter('a[title]') as $node) {
-    //      var_dump($node);
-    //  }
-    //  die;
+        
+        $text = $crawler->filter('a')->text();
+        $href = $crawler->filter('a')->link()->getUri();
+       // $title = $crawler->filter('a[title]')->eq(0)->text();
+       // var_dump($text,$href);die;
+       $currentLinks = [];
+
+       // get the links
+       $crawler->filter('a')->each(function(Crawler $node, $i) use (&$currentLinks) {
+           // get the href
+           $nodeUrl = $node->attr('href');
+           $nodeName = $node->text();
+           $nodeTitle = $node->attr('title');
+           $currentLinks[$nodeUrl]['url'] = $nodeUrl;
+           $currentLinks[$nodeUrl]['name'] = $nodeName;
+           $currentLinks[$nodeUrl]['title'] = $nodeTitle;  
+ 
+            
+           
+       });
+      dump($currentLinks);
+     die;
         //  $crawler = $client->request('GET', $url);
 
       //   $results = $crawler->filter('a');
