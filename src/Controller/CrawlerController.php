@@ -34,15 +34,16 @@ class CrawlerController extends AbstractController
         $response = $client->request('GET', $url);
         $statusCode = $response->getStatusCode();
         $html = $response->getBody()->getContents();
-        $crawler = new Crawler($html);
-        $text = $crawler->filter('a')->eq(0)->text();
-        //$href = $crawler->filter('a')->attr('href')->eq(0);
-        //$title = $crawler->filter('a')->attr('title')->eq(0)->text();
-        var_dump($href);die;
-        foreach ($crawler as $domElement) {
-         var_dump($domElement->nodeName);
-     }
-     die;
+        // Need to pass $url to constructor
+        $crawler = new Crawler($html,$url);
+        $text = $crawler->filter('a')->eq(5)->text();
+        $href = $crawler->filter('a')->eq(5)->link()->getUri();
+        $title = $crawler->filter('a[title]')->eq(5)->text();
+        var_dump($href,$text,$title);die;
+    //     foreach ($crawler->filter('a[title]') as $node) {
+    //      var_dump($node);
+    //  }
+    //  die;
         //  $crawler = $client->request('GET', $url);
 
       //   $results = $crawler->filter('a');
