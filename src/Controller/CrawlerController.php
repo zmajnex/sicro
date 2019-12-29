@@ -16,8 +16,10 @@ use GuzzleHttp\Client;
 class CrawlerController extends AbstractController
 {
  
-  
-  
+    public $currentLinks;
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function crawlUrl($url)
     {
        
@@ -54,8 +56,18 @@ class CrawlerController extends AbstractController
            $currentLinks[$nodeUrl]['name'] = $nodeName;
            $currentLinks[$nodeUrl]['title'] = $nodeTitle;                   
        });
-      dump($currentLinks);
-     die;
-        
+      return $this->currentLinks = $currentLinks;       
+    }
+    public function calculateSeoScore(){
+         $numberOfLinks = count($this->currentLinks);
+         $countTitles = 0 ;
+        foreach($this->currentLinks as $link){
+           $title = $link['title'];
+           isset($title) ? $countTitles++ : $countTitles;
+        }
+        $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
+        return $percentOfTitles ." %";
+        // dump($this->currentLinks);
+        // die;
     }
 }

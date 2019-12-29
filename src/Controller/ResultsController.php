@@ -23,18 +23,22 @@ class ResultsController extends AbstractController
         $this->crawler=$crawler;
     }
     /**
-     * @Route("/results", name="results")
+     * @Route("results", name="results")
      */
     public function index(Request $request)
     {
      
         $url = $request->request->get('crawler_form')['url'];
        // call crawler;
+       // return $this->crawler->crawlUrl($url);
         $this->crawler->crawlUrl($url);
-       
+        $resultsTitle = $this->crawler->calculateSeoScore();
         return $this->render('form/results.html.twig', array(
-            'url' => $url
+            'url' => $url,
+            'titles'=> $resultsTitle,
+
         ));
+
     }
   
 }
