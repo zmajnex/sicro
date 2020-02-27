@@ -56,12 +56,17 @@ class CrawlerController extends AbstractController
             $currentLinks[$nodeUrl]['name'] = $nodeName;
             $currentLinks[$nodeUrl]['title'] = $nodeTitle;
         });
+        //var_dump($currentLinks);die;
+        // Show url without tile tag
         foreach ($currentLinks as $key) {
             if ($key['title'] == null) {
                 $this->missingTitles[] = $url . $key['url'];
             }
         }
-       // $this->missingTitles = json_encode($this->missingTitles);
+        $this->missingTitles = json_encode($this->missingTitles);
+        
+        echo $this->missingTitles;
+        die;
         return $this->currentLinks = $currentLinks;
 
     }
@@ -75,8 +80,5 @@ class CrawlerController extends AbstractController
         }
         $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
         return $percentOfTitles . " %";
-    }
-    public function getMissingTitles(){
-        return $this->missingTitles;
     }
 }

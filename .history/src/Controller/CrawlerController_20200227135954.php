@@ -61,7 +61,7 @@ class CrawlerController extends AbstractController
                 $this->missingTitles[] = $url . $key['url'];
             }
         }
-       // $this->missingTitles = json_encode($this->missingTitles);
+        $this->missingTitles = json_encode($this->missingTitles);
         return $this->currentLinks = $currentLinks;
 
     }
@@ -75,8 +75,5 @@ class CrawlerController extends AbstractController
         }
         $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
         return $percentOfTitles . " %";
-    }
-    public function getMissingTitles(){
-        return $this->missingTitles;
     }
 }

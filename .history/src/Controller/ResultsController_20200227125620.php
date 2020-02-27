@@ -33,11 +33,9 @@ class ResultsController extends AbstractController
        // return $this->crawler->crawlUrl($url);
         $this->crawler->crawlUrl($url);
         $resultsTitle = $this->crawler->calculateSeoScore();
-        $missingTitles = $this->crawler->getMissingTitles();
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
-            'missingTitles'=>$missingTitles
 
         ));
 

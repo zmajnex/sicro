@@ -37,7 +37,7 @@ class ResultsController extends AbstractController
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
-            'missingTitles'=>$missingTitles
+            'misingTitles'=>$missingTitles;
 
         ));
 

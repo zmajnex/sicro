@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 //use Goutte\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
 
 class CrawlerController extends AbstractController
 {
@@ -56,12 +55,21 @@ class CrawlerController extends AbstractController
             $currentLinks[$nodeUrl]['name'] = $nodeName;
             $currentLinks[$nodeUrl]['title'] = $nodeTitle;
         });
+        //var_dump($currentLinks);die;
+        // Show url without tile tag
         foreach ($currentLinks as $key) {
             if ($key['title'] == null) {
                 $this->missingTitles[] = $url . $key['url'];
             }
         }
-       // $this->missingTitles = json_encode($this->missingTitles);
+        $encoders = new JsonEncoder();
+        //$normalizers = [new ObjectNormalizer()];
+
+        $serializer = new Serializer($encoders);
+        $jsonContent = $serializer->serialize($this->missingTitles, 'json');
+        echo $jsonContent;
+        //var_dump($this->missingTitles);
+        die;
         return $this->currentLinks = $currentLinks;
 
     }
@@ -75,8 +83,5 @@ class CrawlerController extends AbstractController
         }
         $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
         return $percentOfTitles . " %";
-    }
-    public function getMissingTitles(){
-        return $this->missingTitles;
     }
 }

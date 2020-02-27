@@ -4,12 +4,11 @@
 <h1>Results page</h1>
 <p>Crawling <strong>{{url}}</strong> is finshed</p>
 <p><strong>{{titles}}</strong> of your "a" tags has title.</p>
-
+</div>
 <p>List of links with missing title tag</p>
 <ul>
     {% for missingTitle in missingTitles %}
         <li><a href="{{ missingTitle }}">{{ missingTitle }}</a></li>
     {% endfor %}
 </ul>
-</div>
 {% endblock %}
