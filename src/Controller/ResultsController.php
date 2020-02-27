@@ -37,13 +37,15 @@ class ResultsController extends AbstractController
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();
         $missingAlts = $this->crawler->calculateImagesScore();
+        $imagesWitNoAltTags = $this->crawler->getMissingImagesAlt();
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
             'missingTitles'=>$missingTitles,
             'metaDescription'=> $metaDescription, 
             'titleLength' => $titleLength,
-            'missingAlts' => $missingAlts
+            'missingAlts' => $missingAlts,
+            'imagesWitNoAltTags' => $imagesWitNoAltTags
         ));
 
     }

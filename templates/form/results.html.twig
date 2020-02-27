@@ -5,7 +5,7 @@
 <p>Crawling <strong>{{url}}</strong> is finshed</p>
 <p><strong>{{titles}}</strong> of your "a" tags has title.</p>
 
-<p>List of links with missing title tag</p>
+<p><strong>List of links with missing title tag:</strong></p>
 <ul>
     {% for missingTitle in missingTitles %}
         <li><a href="{{ missingTitle }}">{{ missingTitle }}</a></li>
@@ -16,5 +16,27 @@
 <h3>Page title</h3>
 <p>{{titleLength}}</p>
 <p><strong>{{missingAlts}}</strong> of your "image" tags has alt tag.</p>
+<p><strong>Images with missing alt tags:</strong></p>
+{% if missingAlts != "100 %" %}
+<div class="row">
+    {% for imagesWitNoAltTag in imagesWitNoAltTags %}
+        <img src="{{ imagesWitNoAltTag }}"  style="width:200px;height:200px">      
+    {% endfor %}
 </div>
+{% else %}
+    <p>All your images has alt tags.</p>
+{% endif %}
+
+<p><strong>List of images with missing alt tag:</strong></p>
+{% if missingAlts != "100 %" %}
+<ul>
+    {% for imagesWitNoAltTag in imagesWitNoAltTags %}
+        <li><a href="{{ imagesWitNoAltTag }}">{{ imagesWitNoAltTag }}</a></li>      
+    {% endfor %}
+</ul>
+{% else %}
+    <p>Congratulation! No images to add alt tag.</p>
+{% endif %}
+</div>
+
 {% endblock %}
