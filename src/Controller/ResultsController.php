@@ -35,12 +35,13 @@ class ResultsController extends AbstractController
         $resultsTitle = $this->crawler->calculateSeoScore();
         $missingTitles = $this->crawler->getMissingTitles();
         $metaDescription = $this->crawler->calculateMetaDescription();
+        $titleLength = $this->crawler->calculateTitleLength();
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
             'missingTitles'=>$missingTitles,
-            'metaDescription'=> $metaDescription 
-
+            'metaDescription'=> $metaDescription, 
+            'titleLength' => $titleLength
         ));
 
     }
