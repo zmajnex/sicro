@@ -97,7 +97,7 @@ class CrawlerController extends AbstractController
     public function calculateTitleLength(){
         $tmp = $this->metaTitle;
         $metaTitleLength = strlen($tmp);
-        if($metatitleLength > 65 ) {
+        if($metaTitleLength > 65 ) {
             return "Your title is too long";
         } else {
             return "Your title length is fine!";
