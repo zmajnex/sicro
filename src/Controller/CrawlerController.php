@@ -91,7 +91,7 @@ class CrawlerController extends AbstractController
         if($metaDescriptionLength > 160 ) {
             return "Your meta description is too long";
         } else {
-            return "Your meta description is 0k";
+            return "Your meta description length is fine!";
         }
     }
 }
