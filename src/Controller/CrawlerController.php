@@ -17,6 +17,8 @@ class CrawlerController extends AbstractController
 
     public $currentLinks;
     public $missingTitles;
+    public $metaTitle;
+    public $metaDescription;
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -61,7 +63,11 @@ class CrawlerController extends AbstractController
                 $this->missingTitles[] = $url . $key['url'];
             }
         }
-       // $this->missingTitles = json_encode($this->missingTitles);
+        $this->metaDescription = $crawler->filter('meta[name="description"]')->eq(0)->attr('content');
+        $this->metaTitle = $crawler->filter('title')->text();
+
+        //var_dump($this->metaTitle);die;
+        // $this->missingTitles = json_encode($this->missingTitles);
         return $this->currentLinks = $currentLinks;
 
     }
