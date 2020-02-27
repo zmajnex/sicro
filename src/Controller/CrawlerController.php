@@ -96,14 +96,14 @@ class CrawlerController extends AbstractController
     }
     public function calculateImagesScore()
     {
-        $numberOfImages = count($this->$currentImages);
+        $numberOfImages = count($this->currentImages);
         $countAlt = 0;
         foreach ($this->currentImages as $link) {
             $alt= $link['alt'];
             isset($alt) ? $countAlt++ : $countAlt;
         }
-        $percentOfAlts = ($countAlts / $numberOfImages) * 100;
-        return $percentOfTitles . " %";
+        $percentOfAlts = ($countAlt / $numberOfImages) * 100;
+        return $percentOfAlts . " %";
     }
     public function getMissingTitles()
     {
