@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 //use Goutte\Client;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Serializer;
 
 class CrawlerController extends AbstractController
 {
@@ -19,6 +17,8 @@ class CrawlerController extends AbstractController
     public $missingTitles;
     public $metaTitle;
     public $metaDescription;
+    public $currentImages;
+    public $missingImagesAlt;
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -65,9 +65,23 @@ class CrawlerController extends AbstractController
         }
         $this->metaDescription = $crawler->filter('meta[name="description"]')->eq(0)->attr('content');
         $this->metaTitle = $crawler->filter('title')->text();
+        // Get alt tags from images
+        $currentImages = [];
+        $crawler->filter('img')->each(function (Crawler $node, $i) use (&$currentImages) {
+            $nodeImageSrc = $node->attr('src');
+            $nodeImageAlt = $node->attr('alt');
+            $currentImages[$nodeImageSrc]['src'] = $nodeImageSrc;
+            $currentImages[$nodeImageSrc]['alt'] = $nodeImageAlt;
+        });
+        foreach ($currentImages as $key) {
 
-        //var_dump($this->metaTitle);die;
-        // $this->missingTitles = json_encode($this->missingTitles);
+            if ($key['alt'] == null) {
+                $this->missingImagesAlt[] = $url . $key['alt'];
+            }
+        }
+        $this->currentImages = $currentImages;
+       
+        var_dump($this->missingImagesAlt);die;
         return $this->currentLinks = $currentLinks;
 
     }
@@ -82,22 +96,40 @@ class CrawlerController extends AbstractController
         $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
         return $percentOfTitles . " %";
     }
-    public function getMissingTitles(){
+    public function calculateImagesScore()
+    {
+        $numberOfImages = count($this->$currentImages);
+        $countAlt = 0;
+        foreach ($this->currentImages as $link) {
+            $alt= $link['alt'];
+            isset($alt) ? $countAlt++ : $countAlt;
+        }
+        $percentOfAlts = ($countAlts / $numberOfImages) * 100;
+        return $percentOfTitles . " %";
+    }
+    public function getMissingTitles()
+    {
         return $this->missingTitles;
     }
-    public function calculateMetaDescription(){
+    public function getMissingImagesAlt()
+    {
+        return $this->missingImagesAlt;
+    }
+    public function calculateMetaDescription()
+    {
         $tmp = $this->metaDescription;
         $metaDescriptionLength = strlen($tmp);
-        if($metaDescriptionLength > 160 ) {
+        if ($metaDescriptionLength > 160) {
             return "Your meta description is too long";
         } else {
             return "Your meta description length is fine!";
         }
     }
-    public function calculateTitleLength(){
+    public function calculateTitleLength()
+    {
         $tmp = $this->metaTitle;
         $metaTitleLength = strlen($tmp);
-        if($metaTitleLength > 65 ) {
+        if ($metaTitleLength > 65) {
             return "Your title is too long";
         } else {
             return "Your title length is fine!";
