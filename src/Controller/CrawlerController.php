@@ -80,8 +80,6 @@ class CrawlerController extends AbstractController
             }
         }
         $this->currentImages = $currentImages;
-       
-        var_dump($this->missingImagesAlt);die;
         return $this->currentLinks = $currentLinks;
 
     }
