@@ -85,4 +85,13 @@ class CrawlerController extends AbstractController
     public function getMissingTitles(){
         return $this->missingTitles;
     }
+    public function calculateMetaDescription(){
+        $tmp = $this->metaDescription;
+        $metaDescriptionLength = strlen($tmp);
+        if($metaDescriptionLength > 160 ) {
+            return "Your meta description is too long";
+        } else {
+            return "Your meta description is 0k";
+        }
+    }
 }
