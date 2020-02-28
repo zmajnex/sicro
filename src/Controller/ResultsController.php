@@ -42,7 +42,12 @@ class ResultsController extends AbstractController
             'metaDescription'=> $metaDescription, 
             'titleLength' => $titleLength,
             'missingAlts' => $missingAlts,
-            'imagesWitNoAltTags' => $imagesWitNoAltTags
+            'imagesWitNoAltTags' => $imagesWitNoAltTags,
+            'hasLinks' => $this->crawler->numberOfLinks,
+            'hasImages' => $this->crawler->numberOfImages,
+            'hasTitle' => $this->crawler->hasTitle,
+            'hasMetaDescription' => $this->crawler->hasMetaDescription
+
         ));
 
     }

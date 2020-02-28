@@ -44,14 +44,13 @@ class CrawlerController extends AbstractController
         $this->numberOfImages = $crawler->filter('img')->count();
         $this->hasMetaDescription = $crawler->filter('meta[name="description"]')->count();
         $this->hasTitle = $crawler->filter('title')->count();
+        
         if ($this->numberOfLinks > 0) {
             $text = $crawler->filter('a')->text();
             $href = $crawler->filter('a')->link()->getUri();
-
             $currentLinks = [];
-
             // Get the links, title and name
-
+         
             $crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
                 $nodeUrl = $node->attr('href');
                 $nodeName = $node->text();
