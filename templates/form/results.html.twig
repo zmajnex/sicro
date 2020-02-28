@@ -3,6 +3,7 @@
     <div class="container">
 <h1>Results page</h1>
 <p>Crawling <strong>{{url}}</strong> is finshed</p>
+
 <p><strong>{{titles}}</strong> of your "a" tags has title.</p>
 
 <p><strong>List of links with missing title tag:</strong></p>
@@ -29,6 +30,7 @@
 
 <p><strong>List of images with missing alt tag:</strong></p>
 {% if missingAlts != "100 %" %}
+
 <ul>
     {% for imagesWitNoAltTag in imagesWitNoAltTags %}
         <li><a href="{{ imagesWitNoAltTag }}">{{ imagesWitNoAltTag }}</a></li>      

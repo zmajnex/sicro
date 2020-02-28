@@ -35,14 +35,20 @@ class CrawlerController extends AbstractController
         $response = $client->request('GET', $url);
         $statusCode = $response->getStatusCode();
         $html = $response->getBody()->getContents();
+        // To do empty nodes 
         $crawler = new Crawler($html, $url);
+        $numberOfLinks = $crawler->filter('a')->count();
+        $numberOfImages =  $crawler->filter('img')->count();
+        
+        if($numberOfLinks > 0){
         $text = $crawler->filter('a')->text();
         $href = $crawler->filter('a')->link()->getUri();
+    
         $currentLinks = [];
-
+        
         // Get the links, title and name
-
-        $crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
+         
+            $crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
             $nodeUrl = $node->attr('href');
             $nodeName = $node->text();
             $nodeTitle = $node->attr('title');
@@ -55,14 +61,17 @@ class CrawlerController extends AbstractController
                 $this->missingTitles[] = $url . $key['url'];
             }
         }
-
+        $this->currentLinks = $currentLinks;
+    }
         // Get meta description and page title
-
+        if($crawler->filter('meta[name="description"]')->count()>0){
         $this->metaDescription = $crawler->filter('meta[name="description"]')->eq(0)->attr('content');
+    }
+    if($crawler->filter('title')->count()>0){
         $this->metaTitle = $crawler->filter('title')->text();
-
+    }
         // Get alt tags from images
-
+        if($numberOfImages > 0) {
         $currentImages = [];
         $crawler->filter('img')->each(function (Crawler $node, $i) use (&$currentImages) {
             $nodeImageSrc = $node->attr('src');
@@ -77,8 +86,8 @@ class CrawlerController extends AbstractController
             }
         }
         $this->currentImages = $currentImages;
-
-        return $this->currentLinks = $currentLinks;
+    }
+        return ;
 
     }
     /**
@@ -86,8 +95,9 @@ class CrawlerController extends AbstractController
      *
      * @return string
      */
+   
     public function calculateLinksTitleScore()
-    {
+    {    if($this->currentLinks){
         $numberOfLinks = count($this->currentLinks);
         $countTitles = 0;
         foreach ($this->currentLinks as $link) {
@@ -96,7 +106,10 @@ class CrawlerController extends AbstractController
         }
         $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
         return $percentOfTitles . " %";
+    } else {
+        return 'Page has no title';
     }
+}
     /**
      * Calculate images alt tag score form 0 to 100 %
      *
@@ -104,6 +117,7 @@ class CrawlerController extends AbstractController
      */
     public function calculateImagesScore()
     {
+        if($this->currentImages){
         $numberOfImages = count($this->currentImages);
         $countAlt = 0;
         foreach ($this->currentImages as $link) {
@@ -112,7 +126,11 @@ class CrawlerController extends AbstractController
         }
         $percentOfAlts = ($countAlt / $numberOfImages) * 100;
         return $percentOfAlts . " %";
-    }
+    } 
+    else {
+            return "The page has no images";
+        }
+}
     /**
      * Calculate meta description length
      *
@@ -124,7 +142,10 @@ class CrawlerController extends AbstractController
         $metaDescriptionLength = strlen($tmp);
         if ($metaDescriptionLength > self::MAX_META_DESCRIPTION_LENGTH) {
             return "Your meta description is too long";
-        } else {
+        } elseif($metaDescriptionLength == null){
+            return "Your page has no meta description";
+        } 
+        else {
             return "Your meta description length is fine!";
         }
     }
@@ -137,10 +158,15 @@ class CrawlerController extends AbstractController
     {
         $tmp = $this->metaTitle;
         $metaTitleLength = strlen($tmp);
-        if ($metaTitleLength > self::MAX_TITLE_LENGTH) {
+        if ($metaTitleLength > self::MAX_TITLE_LENGTH ) {
             return "Your title is too long";
-        } else {
+        }
+        elseif($metaTitleLength == null){
+           return "Your page has no title";
+        }
+        else {
             return "Your title length is fine!";
         }
+        
     }
 }
