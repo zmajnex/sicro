@@ -30,19 +30,17 @@ class ResultsController extends AbstractController
         $url = $request->request->get('crawler_form')['url'];
         $this->crawler->crawlUrl($url);
         $resultsTitle = $this->crawler->calculateLinksTitleScore();
-        $missingTitles = $this->crawler->missingTitles;
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();
         $missingAlts = $this->crawler->calculateImagesScore();
-        $imagesWitNoAltTags = $this->crawler->missingImagesAlt;
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
-            'missingTitles'=>$missingTitles,
+            'missingTitles'=>$this->crawler->missingTitles,
             'metaDescription'=> $metaDescription, 
             'titleLength' => $titleLength,
             'missingAlts' => $missingAlts,
-            'imagesWitNoAltTags' => $imagesWitNoAltTags,
+            'imagesWitNoAltTags' => $this->crawler->missingImagesAlt,
             'hasLinks' => $this->crawler->numberOfLinks,
             'hasImages' => $this->crawler->numberOfImages,
             'hasTitle' => $this->crawler->hasTitle,
