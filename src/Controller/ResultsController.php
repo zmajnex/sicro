@@ -48,7 +48,8 @@ class ResultsController extends AbstractController
             'hasLinks' => $this->crawler->numberOfLinks,
             'hasImages' => $this->crawler->numberOfImages,
             'hasTitle' => $this->crawler->hasTitle,
-            'hasMetaDescription' => $this->crawler->hasMetaDescription
+            'hasMetaDescription' => $this->crawler->hasMetaDescription,
+            'notAcceptable' => $this->crawler->notAcceptable
 
         ));
 

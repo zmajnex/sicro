@@ -24,6 +24,7 @@ class CrawlerController extends AbstractController
     public const MAX_META_DESCRIPTION_LENGTH = 160;
     private $crawler;
     private $url;
+    public $notAcceptable;
 
     /**
      * Crawl given url, extract page title, meta description,
@@ -39,8 +40,11 @@ class CrawlerController extends AbstractController
 
         $client = new Client();
         $links = array();
-        $response = $client->request('GET', $url);
+        $response = $client->request('GET', $url);  
         $statusCode = $response->getStatusCode();
+        if($statusCode == 406){
+            $this->notAcceptable = true;
+        };
         $html = $response->getBody()->getContents();
         $crawler = new Crawler($html, $url);
         $this->numberOfLinks = $crawler->filter('a')->count();

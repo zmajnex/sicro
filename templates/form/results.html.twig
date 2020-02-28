@@ -2,6 +2,7 @@
 {% block body %}
 	<div class="container">
 		<h1>Results page</h1>
+        {% if notAcceptable == false %}
 		<p>Crawling
 			<strong>{{url}}</strong>
 			is finshed</p>
@@ -62,4 +63,7 @@
 			<p>Your page has no images</p>
 		{% endif %}
 	</div>
+    {% else %}
+    <p>Page couldn't be crawled. Error 406!</p>
+    {% endif %}
 {% endblock %}
