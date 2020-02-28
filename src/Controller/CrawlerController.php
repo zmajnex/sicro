@@ -24,6 +24,7 @@ class CrawlerController extends AbstractController
     public const MAX_META_DESCRIPTION_LENGTH = 160;
     private $crawler;
     private $url;
+
     /**
      * Crawl given url, extract page title, meta description,
      * links, alt and title tags.
@@ -32,6 +33,7 @@ class CrawlerController extends AbstractController
      *
      * @return
      */
+   
     public function crawlUrl($url)
     {
 
