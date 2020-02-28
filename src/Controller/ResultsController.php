@@ -13,7 +13,6 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Controller\CrawlerController;
-//use GuzzleHttp\Client; 
 class ResultsController extends AbstractController
 {
     public $crawler;
@@ -29,15 +28,13 @@ class ResultsController extends AbstractController
     {
      
         $url = $request->request->get('crawler_form')['url'];
-       // call crawler;
-       // return $this->crawler->crawlUrl($url);
         $this->crawler->crawlUrl($url);
-        $resultsTitle = $this->crawler->calculateSeoScore();
-        $missingTitles = $this->crawler->getMissingTitles();
+        $resultsTitle = $this->crawler->calculateLinksTitleScore();
+        $missingTitles = $this->crawler->missingTitles;
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();
         $missingAlts = $this->crawler->calculateImagesScore();
-        $imagesWitNoAltTags = $this->crawler->getMissingImagesAlt();
+        $imagesWitNoAltTags = $this->crawler->missingImagesAlt;
         return $this->render('form/results.html.twig', array(
             'url' => $url,
             'titles'=> $resultsTitle,
