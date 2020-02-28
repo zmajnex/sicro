@@ -19,7 +19,7 @@ class ResultsController extends AbstractController
 
     public function __construct(CrawlerController $crawler ){
        
-        $this->crawler=$crawler;
+        $this->crawler = $crawler;
     }
     /**
      * @Route("results", name="results")
@@ -29,6 +29,10 @@ class ResultsController extends AbstractController
      
         $url = $request->request->get('crawler_form')['url'];
         $this->crawler->crawlUrl($url);
+        $this->crawler->getLinks();
+        $this->crawler->getImages();
+        $this->crawler->getMetaDesription();
+        $this->crawler->getTitle();
         $resultsTitle = $this->crawler->calculateLinksTitleScore();
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();

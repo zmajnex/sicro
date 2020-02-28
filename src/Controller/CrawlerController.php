@@ -22,7 +22,8 @@ class CrawlerController extends AbstractController
     public $hasMetaDescription;
     public const MAX_TITLE_LENGTH = 65;
     public const MAX_META_DESCRIPTION_LENGTH = 160;
-
+    private $crawler;
+    private $url;
     /**
      * Crawl given url, extract page title, meta description,
      * links, alt and title tags.
@@ -44,14 +45,21 @@ class CrawlerController extends AbstractController
         $this->numberOfImages = $crawler->filter('img')->count();
         $this->hasMetaDescription = $crawler->filter('meta[name="description"]')->count();
         $this->hasTitle = $crawler->filter('title')->count();
-        
+        $this->url = $url;
+        return $this->crawler = $crawler;
+    }
+    /**
+     * Extract title tag, name and href from links
+     *
+     * @return $currentLinks
+     */
+    public function getLinks()
+    {
         if ($this->numberOfLinks > 0) {
-            $text = $crawler->filter('a')->text();
-            $href = $crawler->filter('a')->link()->getUri();
+            $text = $this->crawler->filter('a')->text();
+            $href = $this->crawler->filter('a')->link()->getUri();
             $currentLinks = [];
-            // Get the links, title and name
-         
-            $crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
+            $this->crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
                 $nodeUrl = $node->attr('href');
                 $nodeName = $node->text();
                 $nodeTitle = $node->attr('title');
@@ -61,16 +69,25 @@ class CrawlerController extends AbstractController
             });
             foreach ($currentLinks as $key) {
                 if ($key['title'] == null) {
-                    $this->missingTitles[] = $url . $key['url'];
+                    $this->missingTitles[] = $this->url . $key['url'];
                 }
             }
             $this->currentLinks = $currentLinks;
+
         }
 
-        // Get alt tags from images
+        return $this->currentLinks;
+    }
+    /**
+     * Extract src, alt tags from images
+     *
+     * @return $currentImages
+     */
+    public function getImages()
+    {
         if ($this->numberOfImages > 0) {
             $currentImages = [];
-            $crawler->filter('img')->each(function (Crawler $node, $i) use (&$currentImages) {
+            $this->crawler->filter('img')->each(function (Crawler $node, $i) use (&$currentImages) {
                 $nodeImageSrc = $node->attr('src');
                 $nodeImageAlt = $node->attr('alt');
                 $currentImages[$nodeImageSrc]['src'] = $nodeImageSrc;
@@ -79,23 +96,38 @@ class CrawlerController extends AbstractController
             foreach ($currentImages as $key) {
 
                 if ($key['alt'] == null) {
-                    $this->missingImagesAlt[] = $url . $key['src'];
+                    $this->missingImagesAlt[] = $this->url . $key['src'];
                 }
             }
             $this->currentImages = $currentImages;
         }
-        // Get meta description and page title
-
-        if ($this->hasMetaDescription > 0) {
-            $this->metaDescription = $crawler->filter('meta[name="description"]')->eq(0)->attr('content');
-        }
-
-        if ($this->hasTitle > 0) {
-            $this->metaTitle = $crawler->filter('title')->text();
-        }
-        return;
-
+        return $this->currentImages;
     }
+    /**
+     * Get page meta description
+     *
+     * @return $metaDescription
+     */
+    public function getMetaDesription()
+    {
+        if ($this->hasMetaDescription > 0) {
+            $this->metaDescription = $this->crawler->filter('meta[name="description"]')->eq(0)->attr('content');
+        }
+        return $this->metaDescription;
+    }
+    /**
+     * Get page title
+     *
+     * @return $metaTitle
+     */
+    public function getTitle()
+    {
+        if ($this->hasTitle > 0) {
+            $this->metaTitle = $this->crawler->filter('title')->text();
+        }
+        return $this->metaTitle;
+    }
+
     /**
      * Calculate link titles score form 0 to 100 %
      *
@@ -103,18 +135,19 @@ class CrawlerController extends AbstractController
      */
 
     public function calculateLinksTitleScore()
-    {if ($this->currentLinks) {
-        $numberOfLinks = count($this->currentLinks);
-        $countTitles = 0;
-        foreach ($this->currentLinks as $link) {
-            $title = $link['title'];
-            isset($title) ? $countTitles++ : $countTitles;
+    {
+        if ($this->currentLinks) {
+            $numberOfLinks = count($this->currentLinks);
+            $countTitles = 0;
+            foreach ($this->currentLinks as $link) {
+                $title = $link['title'];
+                isset($title) ? $countTitles++ : $countTitles;
+            }
+            $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
+            return $percentOfTitles . " %";
+        } else {
+            return 'Page has no title';
         }
-        $percentOfTitles = ($countTitles / $numberOfLinks) * 100;
-        return $percentOfTitles . " %";
-    } else {
-        return 'Page has no title';
-    }
     }
     /**
      * Calculate images alt tag score form 0 to 100 %
