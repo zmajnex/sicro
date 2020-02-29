@@ -10,9 +10,9 @@
 			<p>
 				<strong>{{titles}}</strong>
 				of your "a" tags has title.</p>
-			<p>
-				<strong>List of links with missing title tag:</strong>
-			</p>
+			<h2>
+				List of links with missing title tag:
+			</h2>
 			<ul>
 				{% for missingTitle in missingTitles %}
 					<li>
@@ -31,9 +31,9 @@
 			<p>
 				<strong>{{missingAlts}}</strong>
 				of your "image" tags has alt tag.</p>
-			<p>
-				<strong>Images with missing alt tags:</strong>
-			</p>
+			<h2>
+				Images with missing alt tags:
+			</h2>
 			{% if missingAlts != "100 %" %}
 				<div class="row">
 					{% for imagesWitNoAltTag in imagesWitNoAltTags %}
@@ -44,9 +44,9 @@
 				<p>All your images has alt tags.</p>
 			{% endif %}
 
-			<p>
-				<strong>List of images with missing alt tag:</strong>
-			</p>
+			<h2>
+				List of images with missing alt tag:
+			</h2>
 			{% if missingAlts != "100 %" %}
 
 				<ul>
@@ -66,4 +66,30 @@
     {% else %}
     <p>Page couldn't be crawled. Error 406!</p>
     {% endif %}
+	<div class="container">
+	<h2>Page headings</h2>
+	<table class="table">
+    <thead>
+      <tr>
+        <th>H1</th>
+        <th>H2</th>
+        <th>H3</th>
+		<th>H4</th>
+		<th>H5</th>
+		<th>H6</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{h1}}</td>
+        <td>{{h2}}</td>
+		<td>{{h3}}</td>
+		<td>{{h4}}</td>
+		<td>{{h5}}</td>
+		<td>{{h6}}</td>
+      </tr>
+          
+    </tbody>
+  </table>
+	</div>
 {% endblock %}

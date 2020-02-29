@@ -25,6 +25,12 @@ class CrawlerController extends AbstractController
     private $crawler;
     private $url;
     public $notAcceptable;
+    public $h1;
+    public $h2;
+    public $h3;
+    public $h4;
+    public $h5;
+    public $h6;
 
     /**
      * Crawl given url, extract page title, meta description,
@@ -52,6 +58,12 @@ class CrawlerController extends AbstractController
         $this->hasMetaDescription = $crawler->filter('meta[name="description"]')->count();
         $this->hasTitle = $crawler->filter('title')->count();
         $this->url = $url;
+        $this->h1 = $crawler->filter('h1')->count();
+        $this->h2 = $crawler->filter('h2')->count();
+        $this->h3 = $crawler->filter('h3')->count();
+        $this->h4 = $crawler->filter('h4')->count();
+        $this->h5 = $crawler->filter('h5')->count();
+        $this->h6 = $crawler->filter('h6')->count();
         return $this->crawler = $crawler;
     }
     /**
@@ -148,7 +160,7 @@ class CrawlerController extends AbstractController
         }
         return $this->metaTitle;
     }
-
+    
     /**
      * Calculate link titles score form 0 to 100 %
      *

@@ -49,7 +49,13 @@ class ResultsController extends AbstractController
             'hasImages' => $this->crawler->numberOfImages,
             'hasTitle' => $this->crawler->hasTitle,
             'hasMetaDescription' => $this->crawler->hasMetaDescription,
-            'notAcceptable' => $this->crawler->notAcceptable
+            'notAcceptable' => $this->crawler->notAcceptable,
+            'h1' => $this->crawler->h1,
+            'h2' => $this->crawler->h2,
+            'h3' => $this->crawler->h3,
+            'h4' => $this->crawler->h4,
+            'h5' => $this->crawler->h5,
+            'h6' => $this->crawler->h6
 
         ));
 
