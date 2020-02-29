@@ -76,6 +76,14 @@ class CrawlerController extends AbstractController
             foreach ($currentLinks as $key) {
                 if ($key['title'] == null) {
                     $this->missingTitles[] = $this->url . $key['url'];
+                //    $tmp = strpos($key['url'],$this->url);
+                //    if($tmp === 0){
+                //    $this->missingTitles[] =  $key['url'];}
+                //    else{
+                //     $this->missingTitles[] = $this->url . $key['url'];
+                //    }
+               
+
                 }
             }
             $this->currentLinks = $currentLinks;
@@ -102,7 +110,14 @@ class CrawlerController extends AbstractController
             foreach ($currentImages as $key) {
 
                 if ($key['alt'] == null) {
-                    $this->missingImagesAlt[] = $this->url . $key['src'];
+                   $this->missingImagesAlt[] = $this->url . $key['src'];
+                //    $tmp = strpos($key['url'], $this->url);
+                //    if($tmp === 0){
+                //     $this->missingImagesAlt[] = $key['src'];
+                //    }else{
+                //     $this->missingImagesAlt[] = $this->url . $key['src'];
+                //    }
+                   
                 }
             }
             $this->currentImages = $currentImages;
