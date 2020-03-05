@@ -242,8 +242,7 @@ class CrawlerController extends AbstractController
         $client = HttpClient::create();
         $links = $this->currentLinks;
         $statusCode = [];
-        $results = []; 
-        ob_start();
+        $results = [];   
         foreach($links as $link){
             //$response = $client->request('GET', $link['url']);  
             //$statusCode = $response->getStatusCode();
@@ -256,8 +255,7 @@ class CrawlerController extends AbstractController
             );}
         
             
-            }      
-            ob_end_flush();               
+            }                   
         return $results;
     }
 }
