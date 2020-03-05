@@ -33,6 +33,7 @@ class ResultsController extends AbstractController
         $this->crawler->getImages();
         $this->crawler->getMetaDesription();
         $this->crawler->getTitle();
+        //dump($this->crawler->getBrokenLinks());die;
         $resultsTitle = $this->crawler->calculateLinksTitleScore();
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();

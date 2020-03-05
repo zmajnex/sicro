@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 
 class CrawlerController extends AbstractController
 {
@@ -236,5 +237,27 @@ class CrawlerController extends AbstractController
             return "Your title length is fine!";
         }
 
+    }
+    public function getBrokenLinks(){
+        $client = HttpClient::create();
+        $links = $this->currentLinks;
+        $statusCode = [];
+        $results = []; 
+        ob_start();
+        foreach($links as $link){
+            //$response = $client->request('GET', $link['url']);  
+            //$statusCode = $response->getStatusCode();
+            if(filter_var($link['url'], FILTER_VALIDATE_URL)){
+            $response = $client->request('GET', $link['url']);  
+            $statusCode = $response->getStatusCode();
+            $results[] = array(
+                'statusCode' => $statusCode,
+                'url' => $link['url']
+            );}
+        
+            
+            }      
+            ob_end_flush();               
+        return $results;
     }
 }
