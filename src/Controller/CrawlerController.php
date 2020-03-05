@@ -5,8 +5,8 @@ namespace App\Controller;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
 
 class CrawlerController extends AbstractController
 {
@@ -41,15 +41,15 @@ class CrawlerController extends AbstractController
      *
      * @return
      */
-   
+
     public function crawlUrl($url)
     {
 
         $client = new Client();
         $links = array();
-        $response = $client->request('GET', $url);  
+        $response = $client->request('GET', $url);
         $statusCode = $response->getStatusCode();
-        if($statusCode == 406){
+        if ($statusCode == 406) {
             $this->notAcceptable = true;
         };
         $html = $response->getBody()->getContents();
@@ -89,13 +89,12 @@ class CrawlerController extends AbstractController
             foreach ($currentLinks as $key) {
                 if ($key['title'] == null) {
                     $this->missingTitles[] = $this->url . $key['url'];
-                //    $tmp = strpos($key['url'],$this->url);
-                //    if($tmp === 0){
-                //    $this->missingTitles[] =  $key['url'];}
-                //    else{
-                //     $this->missingTitles[] = $this->url . $key['url'];
-                //    }
-               
+                    //    $tmp = strpos($key['url'],$this->url);
+                    //    if($tmp === 0){
+                    //    $this->missingTitles[] =  $key['url'];}
+                    //    else{
+                    //     $this->missingTitles[] = $this->url . $key['url'];
+                    //    }
 
                 }
             }
@@ -123,14 +122,14 @@ class CrawlerController extends AbstractController
             foreach ($currentImages as $key) {
 
                 if ($key['alt'] == null) {
-                   $this->missingImagesAlt[] = $this->url . $key['src'];
-                //    $tmp = strpos($key['url'], $this->url);
-                //    if($tmp === 0){
-                //     $this->missingImagesAlt[] = $key['src'];
-                //    }else{
-                //     $this->missingImagesAlt[] = $this->url . $key['src'];
-                //    }
-                   
+                    $this->missingImagesAlt[] = $this->url . $key['src'];
+                    //    $tmp = strpos($key['url'], $this->url);
+                    //    if($tmp === 0){
+                    //     $this->missingImagesAlt[] = $key['src'];
+                    //    }else{
+                    //     $this->missingImagesAlt[] = $this->url . $key['src'];
+                    //    }
+
                 }
             }
             $this->currentImages = $currentImages;
@@ -161,7 +160,7 @@ class CrawlerController extends AbstractController
         }
         return $this->metaTitle;
     }
-    
+
     /**
      * Calculate link titles score form 0 to 100 %
      *
@@ -237,25 +236,28 @@ class CrawlerController extends AbstractController
             return "Your title length is fine!";
         }
 
-    }
-    public function getBrokenLinks(){
+    }/**
+     * To do Refactor code
+     *
+     * @return array $results
+     */
+    public function getBrokenLinks()
+    {
         $client = HttpClient::create();
         $links = $this->currentLinks;
         $statusCode = [];
-        $results = [];   
-        foreach($links as $link){
-            //$response = $client->request('GET', $link['url']);  
-            //$statusCode = $response->getStatusCode();
-            if(filter_var($link['url'], FILTER_VALIDATE_URL)){
-            $response = $client->request('GET', $link['url']);  
-            $statusCode = $response->getStatusCode();
-            $results[] = array(
-                'statusCode' => $statusCode,
-                'url' => $link['url']
-            );}
-        
-            
-            }                   
+        $results = [];
+        foreach ($links as $link) {
+            if (filter_var($link['url'], FILTER_VALIDATE_URL) && strpos($link['url'],"mailto") !== 0) {
+                $response = $client->request('GET', $link['url']);
+                $statusCode = $response->getStatusCode();
+                $results[] = array(
+                    'statusCode' => $statusCode,
+                    'url' => $link['url'],
+                );
+            }
+
+        }
         return $results;
     }
 }
