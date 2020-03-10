@@ -79,7 +79,7 @@ class CrawlerController extends AbstractController
             $href = $this->crawler->filter('a')->link()->getUri();
             $currentLinks = [];
             $this->crawler->filter('a')->each(function (Crawler $node, $i) use (&$currentLinks) {
-                $nodeUrl = $node->attr('href');
+                $nodeUrl = $node->filter('a')->link()->getUri();
                 $nodeName = $node->text();
                 $nodeTitle = $node->attr('title');
                 $currentLinks[$nodeUrl]['url'] = $nodeUrl;
@@ -88,16 +88,10 @@ class CrawlerController extends AbstractController
             });
             foreach ($currentLinks as $key) {
                 if ($key['title'] == null) {
-                    $this->missingTitles[] = $this->url . $key['url'];
-                    //    $tmp = strpos($key['url'],$this->url);
-                    //    if($tmp === 0){
-                    //    $this->missingTitles[] =  $key['url'];}
-                    //    else{
-                    //     $this->missingTitles[] = $this->url . $key['url'];
-                    //    }
-
+                    $this->missingTitles[] =  $key['url'];
                 }
             }
+            
             $this->currentLinks = $currentLinks;
 
         }
@@ -122,11 +116,11 @@ class CrawlerController extends AbstractController
             foreach ($currentImages as $key) {
 
                 if ($key['alt'] == null) {
-                    $this->missingImagesAlt[] = $this->url . $key['src'];
-                    //    $tmp = strpos($key['url'], $this->url);
-                    //    if($tmp === 0){
+                   $this->missingImagesAlt[] = $this->url . $key['src'];
+                    //    $tmp = strpos( $this->url, $key['src']);
+                    //    if(is_int($tmp) === true){
                     //     $this->missingImagesAlt[] = $key['src'];
-                    //    }else{
+                    //    }elseif(is_int($tmp)=== true){
                     //     $this->missingImagesAlt[] = $this->url . $key['src'];
                     //    }
 
