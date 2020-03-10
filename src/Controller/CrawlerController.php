@@ -116,14 +116,12 @@ class CrawlerController extends AbstractController
             foreach ($currentImages as $key) {
 
                 if ($key['alt'] == null) {
-                   $this->missingImagesAlt[] = $this->url . $key['src'];
-                    //    $tmp = strpos( $this->url, $key['src']);
-                    //    if(is_int($tmp) === true){
-                    //     $this->missingImagesAlt[] = $key['src'];
-                    //    }elseif(is_int($tmp)=== true){
-                    //     $this->missingImagesAlt[] = $this->url . $key['src'];
-                    //    }
-
+                       $tmp = strpos( $key['src'],$this->url );
+                       if(is_int($tmp) === false){
+                        $this->missingImagesAlt[] = $this->url .$key['src'];
+                       }else{
+                        $this->missingImagesAlt[] =  $key['src'];
+                       }
                 }
             }
             $this->currentImages = $currentImages;
