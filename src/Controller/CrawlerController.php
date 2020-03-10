@@ -260,8 +260,7 @@ class CrawlerController extends AbstractController
      */
     public function checkRobots(){
         $client = new Client();
-        $request = new Request();
-        $response = $client->request('GET', $request->getBaseUrl()."/robots.txt");
+        $response = $client->request('GET', $this->url."/robots.txt");
         $statusCode = $response->getStatusCode();
         if($statusCode == 200){
             return "Robots.txt discoverd";
