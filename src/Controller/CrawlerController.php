@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\UrlHelper;
 
 class CrawlerController extends AbstractController
 {
@@ -251,5 +252,21 @@ class CrawlerController extends AbstractController
 
         }
         return $results;
+    }
+    /**
+     * Check if robots.txt is present
+     * Works only on home page  - for now
+     * @return void
+     */
+    public function checkRobots(){
+        $client = new Client();
+        $request = new Request();
+        $response = $client->request('GET', $request->getBaseUrl()."/robots.txt");
+        $statusCode = $response->getStatusCode();
+        if($statusCode == 200){
+            return "Robots.txt discoverd";
+        } else {
+            return "No Robots.txt present";
+        }
     }
 }

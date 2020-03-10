@@ -56,7 +56,8 @@ class ResultsController extends AbstractController
             'h3' => $this->crawler->h3,
             'h4' => $this->crawler->h4,
             'h5' => $this->crawler->h5,
-            'h6' => $this->crawler->h6
+            'h6' => $this->crawler->h6,
+            'robots'=>$this->crawler->checkRobots()
 
         ));
 
