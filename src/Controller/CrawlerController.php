@@ -9,6 +9,7 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\UrlHelper;
 
+
 class CrawlerController extends AbstractController
 {
 
@@ -33,7 +34,10 @@ class CrawlerController extends AbstractController
     public $h4;
     public $h5;
     public $h6;
-
+    public $brokenLinks;
+    public $brokenLinksUrl;
+    
+    
     /**
      * Crawl given url, extract page title, meta description,
      * links, alt and title tags.
@@ -232,26 +236,41 @@ class CrawlerController extends AbstractController
     }/**
      * To do Refactor code
      *
-     * @return array $results
+     * @return array $brokenLinks
      */
-    public function getBrokenLinks()
+    public function checkBrokenLinks()
     {
         $client = HttpClient::create();
         $links = $this->currentLinks;
         $statusCode = [];
-        $results = [];
+        $brokenLinks = [];
         foreach ($links as $link) {
             if (filter_var($link['url'], FILTER_VALIDATE_URL) && strpos($link['url'],"mailto") !== 0) {
                 $response = $client->request('GET', $link['url']);
                 $statusCode = $response->getStatusCode();
-                $results[] = array(
+                $brokenLinks[] = array(
                     'statusCode' => $statusCode,
                     'url' => $link['url'],
                 );
             }
 
         }
-        return $results;
+        return $this->brokenLinks;
+    }
+    public function showBrokenLinks(){
+
+        $this->checkBrokenLinks();
+        if($this->brokenLinks != null){
+        foreach ($this->brokenLinks as $link){
+            if($link['statusCode'] != 200){
+                $results[] = $link['url'];
+            }
+        }
+        return $this->brokenLinksUrl;
+    }else {
+        
+        return "No broken links. Good Job!";
+    }
     }
     /**
      * Check if robots.txt is present

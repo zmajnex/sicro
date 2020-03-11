@@ -13,11 +13,12 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Controller\CrawlerController;
+use App\Controller\Core\Title;
 class ResultsController extends AbstractController
 {
     public $crawler;
 
-    public function __construct(CrawlerController $crawler ){
+    public function __construct(CrawlerController $crawler){
        
         $this->crawler = $crawler;
     }
@@ -33,7 +34,8 @@ class ResultsController extends AbstractController
         $this->crawler->getImages();
         $this->crawler->getMetaDesription();
         $this->crawler->getTitle();
-        //dump($this->crawler->getBrokenLinks());die;
+        //dump($this->crawler->showBrokenLinks());die;
+        $brokenLinks = $this->crawler->showBrokenLinks();
         $resultsTitle = $this->crawler->calculateLinksTitleScore();
         $metaDescription = $this->crawler->calculateMetaDescription();
         $titleLength = $this->crawler->calculateTitleLength();
@@ -57,8 +59,8 @@ class ResultsController extends AbstractController
             'h4' => $this->crawler->h4,
             'h5' => $this->crawler->h5,
             'h6' => $this->crawler->h6,
-            'robots'=>$this->crawler->checkRobots()
-
+           // 'robots'=>$this->crawler->checkRobots(),
+            'brokenLinks' => $brokenLinks 
         ));
 
     }
