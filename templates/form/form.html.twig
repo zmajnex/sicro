@@ -1,5 +1,17 @@
 {% extends ('base.html.twig')%}
+
 {% block body %}
+<div class='progress' id="progress_div">
+    <div class='bar' id='bar1'></div>
+    <div class='percent' id='percent1'></div>
+  </div>
+  <div id="wrapper">
+    <div id="content">
+      
+    </div>
+  </div>
+  
+  <input type="hidden" id="progress_width" value="0">
     <div class="container">
 {{ form(form) }}
 </div>
