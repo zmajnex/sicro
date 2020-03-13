@@ -9,4 +9,6 @@ Simple Symfony crawler. It crawls given website url and checks missing titles on
 * Checking title length SEO  
 * Checking meta title length SEO  
 * Checking images with missing alt tags   
-* Showing images and images url with mising alt tags on result page
+* Showing images and images url with mising alt tags on result page  
+## Css and js compile  
+* yarn run encore dev --watch  
