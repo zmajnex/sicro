@@ -13,7 +13,7 @@
 }
 .bar 
 { 
-  background-color: #819FF7; 
+  background-color: rgb(236, 39, 13); 
   width:0%; 
   height:5px; 
   border-radius: 3px; 
@@ -32,19 +32,4 @@
   margin:0px auto;
   font-family:helvetica;
   text-align:center;
-}
-h1
-{
-  text-align:center;
-  font-size:35px;
-  margin-top:60px;
-  color:#A9BCF5;
-}
-h1 p
-{
-  text-align:center;
-  margin:0px;
-  font-size:18px;
-  text-decoration:underline;
-  color:grey;
 }
