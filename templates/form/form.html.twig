@@ -15,4 +15,18 @@
     <div class="container">
 {{ form(form) }}
 </div>
+{# <script>
+  $("crawler_form_Go").click(function(e) {
+  var requestPath = "{{path('results')}}";
+  var inputData = $("#crawler_form_url").val();
+    e.preventDefault();
+  $.ajax({
+                url: requestPath,
+                type: 'POST',
+                data: inputData,
+                success:
+                    console.log("xyxy")               
+            });
+  });
+</script> #}
 {% endblock %}
