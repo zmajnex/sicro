@@ -56,6 +56,16 @@ class CrawlerController extends AbstractController
             return $this->url = $url;
        
     }
+    public function isCrawable(){
+        $client = new Client();
+        $response = $client->request('GET', $this->url);
+        $statusCode = $response->getStatusCode();
+        if($statusCode == 200){
+            return true; 
+        } else {
+            return false;
+        }
+    }
     public function crawlUrl()
     {  
 
@@ -73,7 +83,6 @@ class CrawlerController extends AbstractController
         $this->numberOfImages = $crawler->filter('img')->count();
         $this->hasMetaDescription = $crawler->filter('meta[name="description"]')->count();
         $this->hasTitle = $crawler->filter('title')->count();
-        //$this->url = $url;
         $this->h1 = $crawler->filter('h1')->count();
         $this->h2 = $crawler->filter('h2')->count();
         $this->h3 = $crawler->filter('h3')->count();

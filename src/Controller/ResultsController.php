@@ -30,12 +30,12 @@ class ResultsController extends AbstractController
      
         $url = $request->request->get('crawler_form')['url'];
         $this->crawler->setUrl($url);
+       if($this->crawler->isCrawable()){
         $this->crawler->crawlUrl();
         $this->crawler->getLinks();
         $this->crawler->getImages();
         $this->crawler->getMetaDesription();
         $this->crawler->getTitle();
-        //dump($this->crawler->showBrokenLinks());die;
         $brokenLinks = $this->crawler->showBrokenLinks();
         $resultsTitle = $this->crawler->calculateLinksTitleScore();
         $metaDescription = $this->crawler->calculateMetaDescription();
@@ -65,5 +65,9 @@ class ResultsController extends AbstractController
         ));
 
     }
-  
+    else {
+        dump('Page is not crawable');
+} 
+
+}
 }
