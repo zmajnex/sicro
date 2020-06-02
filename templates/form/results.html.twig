@@ -54,6 +54,11 @@
 			<h2>
 				List of images with missing alt tag:
 			</h2>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseImages" role="button" aria-expanded="false" aria-controls="collapseImages">
+    		Show links
+  			</a>
+        <div class="collapse" id="collapseImages">
+          <div class="card card-body">
 			{% if missingAlts != "100 %" %}
 
 				<ul>
@@ -69,6 +74,8 @@
 		{% else %}
 			<p>Your page has no images</p>
 		{% endif %}
+		</div>
+		</div>
 	</div>
     {% else %}
     <p>Page couldn't be crawled. Error 406!</p>
