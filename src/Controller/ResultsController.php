@@ -29,7 +29,8 @@ class ResultsController extends AbstractController
     {
      
         $url = $request->request->get('crawler_form')['url'];
-        $this->crawler->crawlUrl($url);
+        $this->crawler->setUrl($url);
+        $this->crawler->crawlUrl();
         $this->crawler->getLinks();
         $this->crawler->getImages();
         $this->crawler->getMetaDesription();

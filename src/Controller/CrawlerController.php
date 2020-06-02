@@ -46,24 +46,34 @@ class CrawlerController extends AbstractController
      *
      * @return
      */
-
-    public function crawlUrl($url)
-    {
+    /**
+     * Set Url
+     *
+     * @return string url
+     */
+    public function setUrl($url){
+        
+            return $this->url = $url;
+       
+    }
+    public function crawlUrl()
+    {  
 
         $client = new Client();
+        
         $links = array();
-        $response = $client->request('GET', $url);
+        $response = $client->request('GET', $this->url);
         $statusCode = $response->getStatusCode();
         if ($statusCode == 406) {
             $this->notAcceptable = true;
         };
         $html = $response->getBody()->getContents();
-        $crawler = new Crawler($html, $url);
+        $crawler = new Crawler($html, $this->url);
         $this->numberOfLinks = $crawler->filter('a')->count();
         $this->numberOfImages = $crawler->filter('img')->count();
         $this->hasMetaDescription = $crawler->filter('meta[name="description"]')->count();
         $this->hasTitle = $crawler->filter('title')->count();
-        $this->url = $url;
+        //$this->url = $url;
         $this->h1 = $crawler->filter('h1')->count();
         $this->h2 = $crawler->filter('h2')->count();
         $this->h3 = $crawler->filter('h3')->count();
