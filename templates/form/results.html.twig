@@ -13,6 +13,11 @@
 			<h2>
 				List of links with missing title tag:
 			</h2>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseLinks" role="button" aria-expanded="false" aria-controls="collapseLinks">
+    		Show links
+  			</a>
+        <div class="collapse" id="collapseLinks">
+          <div class="card card-body">
 			<ul>
 				{% for missingTitle in missingTitles %}
 					<li>
@@ -23,6 +28,8 @@
 		{% else %}
 			<p>Your page has no links!</p>
 		{% endif %}
+		</div>
+		</div>
 		<h3>Meta description</h3>
 		<p>{{metaDescription }}</p>
 		<h3>Page title</h3>
