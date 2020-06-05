@@ -8,6 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\UrlHelper;
+use App\Controller\UrlController;
 
 
 class CrawlerController extends AbstractController
@@ -36,8 +37,7 @@ class CrawlerController extends AbstractController
     public $h6;
     public $brokenLinks;
     public $brokenLinksUrl;
-    
-    
+   
     /**
      * Crawl given url, extract page title, meta description,
      * links, alt and title tags.
