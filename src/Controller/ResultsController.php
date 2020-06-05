@@ -14,13 +14,16 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Controller\CrawlerController;
 use App\Controller\Core\Title;
+use App\Controller\UrlController;
 class ResultsController extends AbstractController
 {
     public $crawler;
+    public $urlc;
 
-    public function __construct(CrawlerController $crawler){
+    public function __construct(CrawlerController $crawler, UrlController $url ){
        
         $this->crawler = $crawler;
+        $this->urlc = $url;
     }
     /**
      * @Route("results", name="results")
@@ -29,6 +32,8 @@ class ResultsController extends AbstractController
     {
      
         $url = $request->request->get('crawler_form')['url'];
+        $this->urlc->setUrl($url);
+        dump($this->urlc->getUrl());die;
         $this->crawler->setUrl($url);
        if($this->crawler->isCrawable()){
         $this->crawler->crawlUrl();
