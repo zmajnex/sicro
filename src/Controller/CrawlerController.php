@@ -37,29 +37,18 @@ class CrawlerController extends AbstractController
     public $h6;
     public $brokenLinks;
     public $brokenLinksUrl;
+    public $statusCode;
+    
    
-    /**
-     * Crawl given url, extract page title, meta description,
-     * links, alt and title tags.
-     *
-     * @param string $url
-     *
-     * @return
-     */
-    /**
-     * Set Url
-     *
-     * @return string url
-     */
     public function setUrl($url){
-        
-            return $this->url = $url;
-       
+    return $this->url = $url; 
     }
+    
     public function isCrawable(){
         $client = new Client();
         $response = $client->request('GET', $this->url);
         $statusCode = $response->getStatusCode();
+        $this->statusCode = $statusCode;
         if($statusCode == 200){
             return true; 
         } else {
@@ -70,7 +59,6 @@ class CrawlerController extends AbstractController
     {  
 
         $client = new Client();
-        
         $links = array();
         $response = $client->request('GET', $this->url);
         $statusCode = $response->getStatusCode();

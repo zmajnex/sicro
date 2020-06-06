@@ -18,12 +18,13 @@ use App\Controller\UrlController;
 class ResultsController extends AbstractController
 {
     public $crawler;
-    public $urlc;
+    
+    
 
-    public function __construct(CrawlerController $crawler, UrlController $url ){
+    public function __construct(CrawlerController $crawler ){
        
         $this->crawler = $crawler;
-        $this->urlc = $url;
+       
     }
     /**
      * @Route("results", name="results")
@@ -31,10 +32,8 @@ class ResultsController extends AbstractController
     public function index(Request $request)
     {
      
-        $url = $request->request->get('crawler_form')['url'];
-        $this->urlc->setUrl($url);
-        dump($this->urlc->getUrl());die;
-        $this->crawler->setUrl($url);
+       $url = $request->request->get('crawler_form')['url'];
+       $this->crawler->setUrl($url);
        if($this->crawler->isCrawable()){
         $this->crawler->crawlUrl();
         $this->crawler->getLinks();
@@ -71,7 +70,9 @@ class ResultsController extends AbstractController
 
     }
     else {
-        dump('Page is not crawable');
+        $flush ='The page or website is not crawable, please try later';
+        $statusCode = $this->crawler->statusCode;
+        return $this->render('form/error.html.twig', array('flush'=>$flush,'statusCode' => $statusCode));
 } 
 
 }

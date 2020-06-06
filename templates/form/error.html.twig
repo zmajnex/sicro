@@ -1,0 +1,12 @@
+{% extends ('base.html.twig')%}
+{% block body %}
+	<div class="container">
+    <div class="card mt-4">
+  <div class="card-body">
+    <p >{{flush}}</p>
+    <p >The server response with status code = <span style="color:red">{{statusCode}}</span></p>
+    <a href="{{path('form page')}}" class="btn btn-primary">Back to crawler</a>
+    </div>
+    </div>
+    </div>
+    {% endblock %}
