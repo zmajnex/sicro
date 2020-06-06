@@ -2,8 +2,8 @@
 {% block body %}
 <div class="m-4">
 <div class="card">
-  <div class="card-header">
-    Results
+  <div class="card-header text-center">
+    <span class="text-success"><strong>RESULTS</strong></span>
   </div>
   <div class="card-body">
     <p class="card-text">Crawling <strong>{{url}}</strong> is finshed.</p> 
@@ -12,10 +12,10 @@
 {# Titles on <a> tag #}
 <div class="card">
   <div class="card-header">
-    Title tags
+    <strong>Title tags</strong>
   </div>
   <div class="card-body">
-  <h5>List of links with missing titles tags</h5>
+  <p>List of links with missing titles tags</p>
     {% if hasTitle !=0 %}
 	<p><strong>{{titles}}</strong> of your "a" tags has title.</p>
 	<a class="btn btn-primary" data-toggle="collapse" href="#collapseLinks" role="button" aria-expanded="false" aria-controls="collapseLinks">Show links</a>
@@ -37,29 +37,29 @@
 {# Meta description #}
 <div class="card">
   <div class="card-header">
-    Meta description length
+    <strong>Meta description length</strong>
   </div>
   <div class="card-body">
-  <h5>Meta description</h5>
+  <p>Meta description</p>
   <p class="card-text">{{metaDescription }}</p>
   </div>
 </div>				
 {# Meta title #}
 <div class="card">
   <div class="card-header">
-    Meta title
+    <strong>Meta title</strong>
   </div>
   <div class="card-body">
- <h5>Page title</h5>
+ <p>Page title</p>
  <p class="card-text">{{titleLength}}</p>
 </div>
 {# Images missing alt tag #}
 <div class="card">
   <div class="card-header">
-    Images 
+    <strong>Images</strong> 
   </div>
   <div class="card-body">
- <h5>Images missing alt tag</h5>
+ <p>Images missing alt tag</p>
  {% if hasImages !=0 %}
 	<p class="card-text"><strong>{{missingAlts}} </strong> of your "image" tags has alt tag.</p>
 			{% if missingAlts != "100 %" %}
@@ -84,7 +84,7 @@
 					{% endfor %}
 				</ul>
 			{% else %}
-				<p >Congratulation! No images to add alt tag.</p>
+				<p >Congratulations! No images to add alt tag.</p>
 			{% endif %}
 		{% else %}
 			<p >Your page has no images</p>
@@ -95,7 +95,7 @@
 {# Headings #}
 <div class="card">
   <div class="card-header">
-    Headings
+    <strong>Headings</strong>
   </div>
   <div class="card-body">
 	<table class="table">
@@ -126,7 +126,7 @@
 {# Broken Links #}
 <div class="card">
   <div class="card-header">
-    Broken Links
+    <strong>Broken Links</strong>
   </div>
   <div class="card-body">
 {% if brokenLinks is iterable %}
