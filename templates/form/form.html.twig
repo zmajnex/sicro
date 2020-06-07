@@ -7,39 +7,7 @@
     <div class="container">
 {{ form(form) }}
 </div>
-<div id="loader"  class="center hidden">
-</div>
 
-<style> 
-        {# #loader { 
-            border: 12px solid #f3f3f3; 
-            border-radius: 50%; 
-            border-top: 12px solid teal; 
-            width: 70px; 
-            height: 70px; 
-            animation: spin 2s linear infinite; 
-        } 
-          
-        @keyframes spin { 
-            100% { 
-                transform: rotate(360deg); 
-            } 
-        } 
-          
-        .center { 
-            position: absolute; 
-            top: 0; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            margin: auto; 
-        } 
-        .hidden {display:none} #}
-        
-    </style> 
-    <script> 
-    $('#crawler_form_Go').click(function(){
-   $('#loader').removeClass("hidden").prependTo(document.body); 
-});
-    </script> 
+<div id="loader"  class="center hidden">
+</div> 
 {% endblock %}
