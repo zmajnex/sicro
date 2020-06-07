@@ -140,8 +140,36 @@
     {% endif %}
   </div>
 </div>
+{# Number of request #}
+<div class="card">
+  <div class="card-header">
+    <strong>Number of request</strong>
+  </div>
+  <div class="card-body">
+  <p>Total number of requests: <span id="requests"></span> </p>
+</div>
+{# First Paint #}
+<div class="card">
+  <div class="card-header">
+    <strong>First paint</strong>
+  </div>
+  <div class="card-body">
+  <p>Time to first paint: <span id="firstPaint"></span> s </p>
+</div>
 </div>
 
+<script>
+var  totalNoOfRequests = window.performance.getEntries().length;
+var start = window.performance.getEntriesByType("navigation")[0].requestStart
+var end = window.performance.getEntriesByType("navigation")[0].responseEnd
+var loadTime = (end - start) / 1000
+var pageNav = performance.getEntriesByType("navigation")[0];
+var dnsTime = (pageNav.domainLookupEnd - pageNav.domainLookupStart) / 1000;
+var timeToFirstPaint = window.performance.getEntriesByType("paint")[0].startTime / 1000;
+document.getElementById("requests").innerHTML = totalNoOfRequests;
+document.getElementById("firstPaint").innerHTML = timeToFirstPaint;
 
+console.log(timeToFirstPaint);
+</script>
 
 {% endblock %}
