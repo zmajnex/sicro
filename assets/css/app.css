@@ -1,35 +1,63 @@
 .green {
-    color: rgb(27, 216, 27);
+  color: rgb(27, 216, 27);
 }
-.progress 
-{
- position: fixed;
- left: 0px;
- top: 0px;
- width: 100%;
- height: 100%;
- z-index: 9999;
- background-color: #F2F2F2;
+
+.progress {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: #F2F2F2;
 }
-.bar 
-{ 
-  background-color: rgb(236, 39, 13); 
-  width:0%; 
-  height:5px; 
-  border-radius: 3px; 
+
+.bar {
+  background-color: rgb(236, 39, 13);
+  width: 0%;
+  height: 5px;
+  border-radius: 3px;
 }
-.percent 
-{ 
-  position:absolute; 
-  display:inline-block; 
-  top:3px; 
-  left:48%; 
+
+.percent {
+  position: absolute;
+  display: inline-block;
+  top: 3px;
+  left: 48%;
 }
-#wrapper
-{
-  width:995px;
-  padding:0px;
-  margin:0px auto;
-  font-family:helvetica;
-  text-align:center;
+
+#wrapper {
+  width: 995px;
+  padding: 0px;
+  margin: 0px auto;
+  font-family: helvetica;
+  text-align: center;
+}
+
+#loader {
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid teal;
+  width: 70px;
+  height: 70px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.hidden {
+  display: none
 }
