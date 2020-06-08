@@ -1,32 +1,17 @@
 {% extends ('base.html.twig')%}
 
 {% block body %}
-<div class='progress' id="progress_div">
-    <div class='bar' id='bar1'></div>
-    <div class='percent' id='percent1'></div>
-  </div>
-  <div id="wrapper">
-    <div id="content">
-      
-    </div>
-  </div>
+
   
   <input type="hidden" id="progress_width" value="0">
     <div class="container">
 {{ form(form) }}
+<div id="loader"  class="center hidden">
 </div>
-{# <script>
-  $("crawler_form_Go").click(function(e) {
-  var requestPath = "{{path('results')}}";
-  var inputData = $("#crawler_form_url").val();
-    e.preventDefault();
-  $.ajax({
-                url: requestPath,
-                type: 'POST',
-                data: inputData,
-                success:
-                    console.log("xyxy")               
-            });
-  });
-</script> #}
+<div id="progress" class="hidden mt-4">
+<p class="text-center">Crawling in progress. It may take some time...</p>
+</div>
+</div>
+
+ 
 {% endblock %}

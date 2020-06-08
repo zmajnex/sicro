@@ -1,21 +1,24 @@
 {% extends ('base.html.twig')%}
 {% block body %}
-	<div class="container">
-		<h1>Results page</h1>
-        {% if notAcceptable == false %}
-		<p>Crawling
-			<strong>{{url}}</strong>
-			is finshed</p>
-		{% if hasTitle !=0 %}
-			<p>
-				<strong>{{titles}}</strong>
-				of your "a" tags has title.</p>
-			<h2>
-				List of links with missing title tag:
-			</h2>
-			<a class="btn btn-primary" data-toggle="collapse" href="#collapseLinks" role="button" aria-expanded="false" aria-controls="collapseLinks">
-    		Show links
-  			</a>
+<div class="m-4">
+<div class="card">
+  <div class="card-header text-center">
+    <span class="text-success"><strong>RESULTS</strong></span>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Crawling <strong>{{url}}</strong> is finshed.</p> 
+  </div>
+</div>
+{# Titles on <a> tag #}
+<div class="card">
+  <div class="card-header">
+    <strong>Title tags</strong>
+  </div>
+  <div class="card-body">
+  <p>List of links with missing titles tags</p>
+    {% if hasTitle !=0 %}
+	<p><strong>{{titles}}</strong> of your "a" tags has title.</p>
+	<a class="btn btn-primary" data-toggle="collapse" href="#collapseLinks" role="button" aria-expanded="false" aria-controls="collapseLinks">Show links</a>
         <div class="collapse" id="collapseLinks">
           <div class="card card-body">
 			<ul>
@@ -27,20 +30,38 @@
 			</ul>
 		{% else %}
 			<p>Your page has no links!</p>
-		{% endif %}
-		</div>
-		</div>
-		<h3>Meta description</h3>
-		<p>{{metaDescription }}</p>
-		<h3>Page title</h3>
-		<p>{{titleLength}}</p>
-		{% if hasImages !=0 %}
-			<p>
-				<strong>{{missingAlts}}</strong>
-				of your "image" tags has alt tag.</p>
-			<h2>
-				Images with missing alt tags:
-			</h2>
+		{% endif %} 
+  </div>
+</div>
+</div>
+{# Meta description #}
+<div class="card">
+  <div class="card-header">
+    <strong>Meta description length</strong>
+  </div>
+  <div class="card-body">
+  <p>Meta description</p>
+  <p class="card-text">{{metaDescription }}</p>
+  </div>
+</div>				
+{# Meta title #}
+<div class="card">
+  <div class="card-header">
+    <strong>Meta title</strong>
+  </div>
+  <div class="card-body">
+ <p>Page title</p>
+ <p class="card-text">{{titleLength}}</p>
+</div>
+{# Images missing alt tag #}
+<div class="card">
+  <div class="card-header">
+    <strong>Images</strong> 
+  </div>
+  <div class="card-body">
+ <p>Images missing alt tag</p>
+ {% if hasImages !=0 %}
+	<p class="card-text"><strong>{{missingAlts}} </strong> of your "image" tags has alt tag.</p>
 			{% if missingAlts != "100 %" %}
 				<div class="row">
 					{% for imagesWitNoAltTag in imagesWitNoAltTags %}
@@ -48,19 +69,13 @@
 					{% endfor %}
 				</div>
 			{% else %}
-				<p>All your images has alt tags.</p>
+				<p class="card-text">All your images has alt tags.</p>
 			{% endif %}
-
-			<h2>
-				List of images with missing alt tag:
-			</h2>
-			<a class="btn btn-primary" data-toggle="collapse" href="#collapseImages" role="button" aria-expanded="false" aria-controls="collapseImages">
-    		Show links
-  			</a>
+<h5>List of images with missing alt tag:</h5>
+	<a class="btn btn-primary" data-toggle="collapse" href="#collapseImages" role="button" aria-expanded="false" aria-controls="collapseImages">Show links</a>
         <div class="collapse" id="collapseImages">
           <div class="card card-body">
 			{% if missingAlts != "100 %" %}
-
 				<ul>
 					{% for imagesWitNoAltTag in imagesWitNoAltTags %}
 						<li>
@@ -69,19 +84,20 @@
 					{% endfor %}
 				</ul>
 			{% else %}
-				<p>Congratulation! No images to add alt tag.</p>
+				<p >Congratulations! No images to add alt tag.</p>
 			{% endif %}
 		{% else %}
-			<p>Your page has no images</p>
-		{% endif %}
+			<p >Your page has no images</p>
+	{% endif %}
+	        </div>
 		</div>
-		</div>
-	</div>
-    {% else %}
-    <p>Page couldn't be crawled. Error 406!</p>
-    {% endif %}
-	<div class="container">
-	<h2>Page headings</h2>
+</div>
+{# Headings #}
+<div class="card">
+  <div class="card-header">
+    <strong>Headings</strong>
+  </div>
+  <div class="card-body">
 	<table class="table">
     <thead>
       <tr>
@@ -105,22 +121,55 @@
           
     </tbody>
   </table>
-	</div>
-	{# <div class="container">
-	<h2>Robots:</h2>
-	<p>{{robots}}</p>
-	</div> #}
-	<div class="container">
-	<h2>Broken Links</h2>
-	{% if brokenLinks is iterable %}
+  </div>
+</div>
+{# Broken Links #}
+<div class="card">
+  <div class="card-header">
+    <strong>Broken Links</strong>
+  </div>
+  <div class="card-body">
+{% if brokenLinks is iterable %}
     {% for brokenLink in brokenLinks %}
         <ul>
 		<li href="{{brokenLink}}"><a> {{ brokenLink }}</a><li>
 		</ul>
     {% endfor %}
-{% else %}
-
+    {% else %}
     <p> {{ brokenLinks }}</p>
-{% endif %}
-	</div>
+    {% endif %}
+  </div>
+</div>
+{# Number of request #}
+<div class="card">
+  <div class="card-header">
+    <strong>Number of request</strong>
+  </div>
+  <div class="card-body">
+  <p>Total number of requests: <span id="requests"></span> </p>
+</div>
+{# First Paint #}
+<div class="card">
+  <div class="card-header">
+    <strong>First paint</strong>
+  </div>
+  <div class="card-body">
+  <p>Time to first paint: <span id="firstPaint"></span> s </p>
+</div>
+</div>
+
+<script>
+var  totalNoOfRequests = window.performance.getEntries().length;
+var start = window.performance.getEntriesByType("navigation")[0].requestStart
+var end = window.performance.getEntriesByType("navigation")[0].responseEnd
+var loadTime = (end - start) / 1000
+var pageNav = performance.getEntriesByType("navigation")[0];
+var dnsTime = (pageNav.domainLookupEnd - pageNav.domainLookupStart) / 1000;
+var timeToFirstPaint = window.performance.getEntriesByType("paint")[0].startTime / 1000;
+document.getElementById("requests").innerHTML = totalNoOfRequests;
+document.getElementById("firstPaint").innerHTML = timeToFirstPaint;
+
+console.log(timeToFirstPaint);
+</script>
+
 {% endblock %}

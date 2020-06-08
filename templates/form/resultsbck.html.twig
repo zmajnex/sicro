@@ -1,0 +1,127 @@
+{% extends ('base.html.twig')%}
+{% block body %}
+	<div class="container">
+		<h1>Results page</h1>
+        {% if notAcceptable == false %}
+		<p>Crawling
+			<strong>{{url}}</strong>
+			is finshed</p>
+		{% if hasTitle !=0 %}
+			<p>
+				<strong>{{titles}}</strong>
+				of your "a" tags has title.</p>
+			<h2>
+				List of links with missing title tag:
+			</h2>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseLinks" role="button" aria-expanded="false" aria-controls="collapseLinks">
+    		Show links
+  			</a>
+        <div class="collapse" id="collapseLinks">
+          <div class="card card-body">
+			<ul>
+				{% for missingTitle in missingTitles %}
+					<li>
+						<a href="{{ missingTitle }}">{{ missingTitle }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Your page has no links!</p>
+		{% endif %}
+		</div>
+		</div>
+		<h3>Meta description</h3>
+		<p>{{metaDescription }}</p>
+		<h3>Page title</h3>
+		<p>{{titleLength}}</p>
+		{% if hasImages !=0 %}
+			<p>
+				<strong>{{missingAlts}}</strong>
+				of your "image" tags has alt tag.</p>
+			<h2>
+				Images with missing alt tags:
+			</h2>
+			{% if missingAlts != "100 %" %}
+				<div class="row">
+					{% for imagesWitNoAltTag in imagesWitNoAltTags %}
+						<img src="{{ imagesWitNoAltTag }}" style="width:200px;height:200px">
+					{% endfor %}
+				</div>
+			{% else %}
+				<p>All your images has alt tags.</p>
+			{% endif %}
+
+			<h2>
+				List of images with missing alt tag:
+			</h2>
+			<a class="btn btn-primary" data-toggle="collapse" href="#collapseImages" role="button" aria-expanded="false" aria-controls="collapseImages">
+    		Show links
+  			</a>
+        <div class="collapse" id="collapseImages">
+          <div class="card card-body">
+			{% if missingAlts != "100 %" %}
+
+				<ul>
+					{% for imagesWitNoAltTag in imagesWitNoAltTags %}
+						<li>
+							<a href="{{ imagesWitNoAltTag }}">{{ imagesWitNoAltTag }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p>Congratulation! No images to add alt tag.</p>
+			{% endif %}
+		{% else %}
+			<p>Your page has no images</p>
+		{% endif %}
+		</div>
+		</div>
+	</div>
+    {% else %}
+    <p>Page couldn't be crawled. Error 406!</p>
+    {% endif %}
+	<div class="container">
+	<h2>Page headings</h2>
+	<table class="table">
+    <thead>
+      <tr>
+        <th>H1</th>
+        <th>H2</th>
+        <th>H3</th>
+		<th>H4</th>
+		<th>H5</th>
+		<th>H6</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{h1}}</td>
+        <td>{{h2}}</td>
+		<td>{{h3}}</td>
+		<td>{{h4}}</td>
+		<td>{{h5}}</td>
+		<td>{{h6}}</td>
+      </tr>
+          
+    </tbody>
+  </table>
+	</div>
+	{# <div class="container">
+	<h2>Robots:</h2>
+	<p>{{robots}}</p>
+	</div> #}
+	<div class="container">
+	<h2>Broken Links</h2>
+	{% if brokenLinks is iterable %}
+    {% for brokenLink in brokenLinks %}
+        <ul>
+		<li href="{{brokenLink}}"><a> {{ brokenLink }}</a><li>
+		</ul>
+    {% endfor %}
+{% else %}
+
+    <p> {{ brokenLinks }}</p>
+{% endif %}
+	</div>
+	
+{% endblock %}
