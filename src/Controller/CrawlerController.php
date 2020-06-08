@@ -27,7 +27,7 @@ class CrawlerController extends AbstractController
     public const MAX_TITLE_LENGTH = 65;
     public const MAX_META_DESCRIPTION_LENGTH = 160;
     private $crawler;
-    private $url;
+    public $url;
     public $notAcceptable;
     public $h1;
     public $h2;
@@ -37,7 +37,12 @@ class CrawlerController extends AbstractController
     public $h6;
     public $brokenLinks;
     public $brokenLinksUrl;
-   
+    public $urlc;
+
+    public function __construct(UrlController $url ){
+       
+        $this->urlc = $url;
+    }
     /**
      * Crawl given url, extract page title, meta description,
      * links, alt and title tags.
@@ -51,9 +56,9 @@ class CrawlerController extends AbstractController
      *
      * @return string url
      */
-    public function setUrl($url){
+    public function setUrl(){
         
-            return $this->url = $url;
+        return $this->urlc->url = $url;
        
     }
     public function isCrawable(){
