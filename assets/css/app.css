@@ -61,3 +61,25 @@
 .hidden {
   display: none
 }
+#wrapper {
+  margin: auto;
+  width: 70%;
+  font-family: sans-serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: 50px;
+  grid-template-areas: '. . .';
+  padding-bottom: 10px;
+}
+
+.box-good {
+  background-color: hsl(118, 41%, 49%);
+}
+.box-needs-improvement {
+  background-color: hsl(31, 78%, 53%);
+}
+.box-poor {
+  background-color: hsl(359, 80%, 50%);
+}

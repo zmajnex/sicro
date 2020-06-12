@@ -15,6 +15,8 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Controller\CrawlerController;
 use App\Controller\Core\Title;
 use App\Controller\UrlController;
+use Psr\Log\LoggerInterface;
+
 class ResultsController extends AbstractController
 {
     public $crawler;
@@ -29,7 +31,7 @@ class ResultsController extends AbstractController
     /**
      * @Route("results", name="results")
      */
-    public function index(Request $request)
+    public function index(Request $request, LoggerInterface $logger )
     {
      
        $url = $request->request->get('crawler_form')['url'];
@@ -72,6 +74,7 @@ class ResultsController extends AbstractController
     else {
         $flush ='The page or website is not crawable, please try later';
         $statusCode = $this->crawler->statusCode;
+        
         return $this->render('form/error.html.twig', array('flush'=>$flush,'statusCode' => $statusCode));
 } 
 
