@@ -1,0 +1,18 @@
+{% extends ('base.html.twig')%}
+
+{% block body %}
+
+  
+  <input type="hidden" id="progress_width" value="0">
+    <div class="container">
+    <p>Plese enter your keyword</p>
+{{ form(serpForm) }}
+<div id="loader"  class="center hidden">
+</div>
+<div id="progress" class="hidden mt-4">
+<p class="text-center">Crawling in progress. It may take some time...</p>
+</div>
+</div>
+
+ 
+{% endblock %}
