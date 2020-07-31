@@ -38,8 +38,13 @@ class SerpResultController extends AbstractController
      
        $keyWord = $request->request->get('serp_form')['keywords'];
        $numberOfResults = $request->request->get('serp_form')['number_of_results'];
+       $location = $request->request->get('serp_form')['location'];
+       // Personilezed websearch, turned off
+       $pws = 0;
        $client = new Client();
-       $googleUrl = "https://www.google.com/search?q=".$keyWord."&num=".$numberOfResults;
+       
+       $googleUrl = "https://www.google.com/search?q=".$keyWord."&num=".$numberOfResults."&gl=".$location."&pws=".$pws;
+       
        $response = $client->request('GET', $googleUrl
       //  ,[
       //    'headers' => [
@@ -52,12 +57,18 @@ class SerpResultController extends AbstractController
        $crawler = new Crawler($html, $googleUrl);
        $nodeTitles = $crawler->filter('.vvjwJb');
        $nodeDescriptions = $crawler->filter('.s3v9rd');
+      // $nodeDescriptions = $crawler->filter('.st');
+       $nodeUrls = $crawler->filter('.kCrYT > a');
+    
+      //dump($this->url);die;
        foreach($nodeTitles as $node) {
          $this->titles[] = $node->nodeValue;
        };
+       
        foreach($nodeDescriptions as $description) {
          $this->description[] = $description->nodeValue;
        };
+     
       //  return new Response(
       //    '<pre> '.print_r($this->description).'</pre>'
         

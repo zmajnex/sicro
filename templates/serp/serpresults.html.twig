@@ -1,11 +1,14 @@
 {% extends ('base.html.twig')%}
 {% block body %}
-<p>SERP results for {{keyword}} keyword</p>
+
 <div class="container">
+<p>SERP titles for {{keyword}} keyword</p>
+<ol>
 {% for title in titles %}
- <p>Title:{{title}}</p>
+ <li>{{title}}</li>
 {% endfor %}
-{% for description in descriptions %}
+</ol>
+{# {% for description in descriptions %}
  <p>Description:<i>{{description}}</i></p>
-{% endfor %}
+{% endfor %} #}
 {% endblock %}
