@@ -57,10 +57,11 @@ class SerpResultController extends AbstractController
        $crawler = new Crawler($html, $googleUrl);
        $nodeTitles = $crawler->filter('.vvjwJb');
        //$nodeDescriptions = $crawler->filter('.s3v9rd');
-       $nodeDescriptions = $crawler->filter('.s3v9rd');
+       $nodeDescriptions = $crawler->filter('.BNeawe.s3v9rd.AP7Wnd .BNeawe.s3v9rd.AP7Wnd');
+       $nodeBreadcrumbs = $crawler->filter('.BNeawe.UPmit.AP7Wnd');
        $nodeUrls = $crawler->filter('.kCrYT > a');
-    
-      //dump($this->url);die;
+       //dump($nodeDescriptions);die;
+       //dump($this->url);die;
        foreach($nodeTitles as $node) {
          $this->titles[] = $node->nodeValue;
        };
