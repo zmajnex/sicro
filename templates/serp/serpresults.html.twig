@@ -8,7 +8,9 @@
  <li>{{title}}</li>
 {% endfor %}
 </ol>
-{# {% for description in descriptions %}
+{% for description in descriptions %}
+{% if loop.index0 % 2 == 1 or loop.last %}
  <p>Description:<i>{{description}}</i></p>
-{% endfor %} #}
+ {% endif %}
+{% endfor %}
 {% endblock %}

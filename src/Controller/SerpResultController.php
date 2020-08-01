@@ -56,8 +56,8 @@ class SerpResultController extends AbstractController
        $html = $response->getBody()->getContents();
        $crawler = new Crawler($html, $googleUrl);
        $nodeTitles = $crawler->filter('.vvjwJb');
+       //$nodeDescriptions = $crawler->filter('.s3v9rd');
        $nodeDescriptions = $crawler->filter('.s3v9rd');
-      // $nodeDescriptions = $crawler->filter('.st');
        $nodeUrls = $crawler->filter('.kCrYT > a');
     
       //dump($this->url);die;
@@ -66,7 +66,7 @@ class SerpResultController extends AbstractController
        };
        
        foreach($nodeDescriptions as $description) {
-         $this->description[] = $description->nodeValue;
+         $this->descriptions[] = $description->nodeValue;
        };
      
       //  return new Response(
@@ -76,7 +76,7 @@ class SerpResultController extends AbstractController
       // return view
       return $this->render('serp/serpresults.html.twig', array(
          'keyword' => $keyWord,
-         'descriptions'=> $this->description,
+         'descriptions'=> $this->descriptions,
          'titles'=>$this->titles
       ));
 }
