@@ -3,11 +3,19 @@
 
 <div class="container">
 <p>SERP titles for {{keyword}} keyword</p>
+<p>Breadcrumbs:</p>
+<ol>
+{% for breadcrumb in breadcrumbs %}
+ <li>{{breadcrumb}}</li>
+{% endfor %}
+</ol>
+<p>Titles:</p>
 <ol>
 {% for title in titles %}
  <li>{{title}}</li>
 {% endfor %}
 </ol>
+<p>Descriptions:</p>
 <ul>
 {% for description in descriptions %}
 {# {% if loop.index0 % 2 == 1 or loop.last %} #}

@@ -24,6 +24,7 @@ class SerpResultController extends AbstractController
     public $titles;
     public $descriptions;
     public $urls;
+    public $breadcrumbs;
 
     public function __construct(CrawlerController $crawler ){
        
@@ -69,6 +70,9 @@ class SerpResultController extends AbstractController
        foreach($nodeDescriptions as $description) {
          $this->descriptions[] = $description->nodeValue;
        };
+       foreach($nodeBreadcrumbs  as $breadcrumb) {
+        $this->breadcrumbs[] = $breadcrumb->nodeValue;
+      };
      
       //  return new Response(
       //    '<pre> '.print_r($this->description).'</pre>'
@@ -78,7 +82,8 @@ class SerpResultController extends AbstractController
       return $this->render('serp/serpresults.html.twig', array(
          'keyword' => $keyWord,
          'descriptions'=> $this->descriptions,
-         'titles'=>$this->titles
+         'titles'=>$this->titles,
+         'breadcrumbs'=>$this->breadcrumbs
       ));
 }
 }
