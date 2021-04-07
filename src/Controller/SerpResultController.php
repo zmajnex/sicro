@@ -7,9 +7,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\DomCrawler\Link;
 
 use GuzzleHttp\Client;
-use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Crawler ;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Controller\CrawlerController;
@@ -61,8 +62,9 @@ class SerpResultController extends AbstractController
        $nodeDescriptions = $crawler->filter('.BNeawe.s3v9rd.AP7Wnd .BNeawe.s3v9rd.AP7Wnd');
        $nodeBreadcrumbs = $crawler->filter('.BNeawe.UPmit.AP7Wnd');
        $nodeUrls = $crawler->filter('.kCrYT > a');
-       //dump($nodeDescriptions);die;
-       //dump($this->url);die;
+       //$nodeUrls = $crawler->filter('a');
+       //dump($nodeUrls);die;
+     
        foreach($nodeTitles as $node) {
          $this->titles[] = $node->nodeValue;
        };
@@ -73,7 +75,10 @@ class SerpResultController extends AbstractController
        foreach($nodeBreadcrumbs  as $breadcrumb) {
         $this->breadcrumbs[] = $breadcrumb->nodeValue;
       };
-     
+      foreach($nodeUrls  as $url) {
+        $this->urls[] = $url->nodeValue;
+      };
+     // dump($this->urls);die;
       //  return new Response(
       //    '<pre> '.print_r($this->description).'</pre>'
         
