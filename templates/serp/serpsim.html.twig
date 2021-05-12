@@ -1,20 +1,31 @@
 {% extends ('base.html.twig')%}
 {% block body %}
 
-    <div class="container">
-        <h5 class="mt-4">Meta title and descriptions simulator</h5>
-        <div id="app-6">
-            <p>{{ "{{ message }}" }}</p>
-            <input class ="form-control" v-model="message">
-        </div>
-    </div>
-    <script>
-        var app6 = new Vue({
+	<div class="container">
+		<h5 class="mt-4">Meta title and descriptions simulator</h5>
+		<div id="app-6">
+			<p>{{ "{{ message }}" }}</p>
+			<input class="form-control" v-model="message">
+		</div>
+	</div>
+	<script>
+		var app6 = new Vue({
 
-            el: '#app-6',
-            data: {
-                message: 'Enter your mete title'
-            }
-        })
-    </script>
+el: '#app-6',
+data: {
+message: null
+}
+})
+	</script>
+	<script>
+		$("input").keyup(function () {
+if ($("input").val().length < 70) {
+$('p').css('color', '');
+$('p').css('color', 'green');
+} else {
+$('p').css('color', 'red');
+}
+
+})
+	</script>
 {% endblock %}
