@@ -9,7 +9,7 @@
     "ext-iconv": "*",
     "fabpot/goutte": "^4.0",
     "google/apiclient": "^2.0",
-    "guzzlehttp/guzzle": "^6.5",
+    "guzzlehttp/guzzle": "^7.4",
     "sensio/framework-extra-bundle": "^5.5",
     "symfony/asset": "4.4.*",
     "symfony/console": "4.4.*",
